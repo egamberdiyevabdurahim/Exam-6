@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Najot Ta'lim | Offer Form</title>
+
+    <!-- Stylesheets   -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap/bootstrap-icons.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap/templatemo-ebook-landing.css' %}" rel="stylesheet">
+
+    <link rel="icon" href="{% static 'files/images/favicon.ico' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/forms/offer/style.css' %}">
+
+    <link href="{% static 'css/bootstrap/templatemo-ebook-landing.css' %}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container mt-5 form-offer">
+    <div class="row">
+        <div class="col-md-6 animation-offer-form mb-4">
+            <dotlottie-player src="https://lottie.host/5ac2c618-54f5-4971-abf3-32457e6013a0/3UMOgBkfLK.json"
+                              background="transparent" speed="1" loop class="animation-offer"
+                              autoplay></dotlottie-player>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group mb-3" role="group">
+                <button type="button" class="btn btn-secondary" id="signInBtn">Offers</button>
+                <button type="button" class="btn btn-secondary active" id="signUpBtn">Problems</button>
+            </div>
+            <a href="index.html" type="button" class="btn btn-secondary back-home">Home</a>
+            <form id="signUpForm">
+                <h4 class="form-title">Submit a problem</h4>
+                <div class="form-group mt-4">
+                    <label for="problemTitle">Title</label>
+                    <input type="text" class="form-control" id="problemTitle" placeholder="Enter problem title">
+                </div>
+                <div class="form-group">
+                    <label for="problemDescription">Description</label>
+                    <textarea class="form-control" id="problemDescription"
+                              placeholder="Enter problem description" maxlength="2000"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <form id="signInForm" style="display: none;">
+                <h4 class="form-title">Submit a offer</h4>
+                <div class="form-group mt-4">
+                    <label for="offerTitle">Title</label>
+                    <input type="text" class="form-control" id="offerTitle" placeholder="Enter offer title">
+                </div>
+                <div class="form-group">
+                    <label for="offerDescription">Description</label>
+                    <textarea class="form-control" id="offerDescription"
+                              placeholder="Enter offer description" maxlength="2000"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{% static 'js/forms/offer/script.js' %}"></script>
+
+<!-- Animations -->
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+        type="module"></script>
+</body>
+</html>

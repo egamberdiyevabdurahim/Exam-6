@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Najot Ta'lim | Offers</title>
+
+    <!-- CSS    -->
+    <link rel="stylesheet" href="{% static 'css/offers/style.css' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap/bootstrap-icons.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap/templatemo-ebook-landing.css' %}" rel="stylesheet">
+
+    <link rel="icon" href="{% static 'files/images/favicon.ico' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="{% static 'css/carusel/carusel.css' %}">
+
+</head>
+<body>
+<!--navbar-->
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="offer.html">
+            <i><img src="{% static 'files/images/logo.png' %}" alt="404" style="width: 60px;"></i>
+            <span>Najot Ta'lim</span>
+        </a>
+
+        <div class="d-lg-none ms-auto me-3">
+            <a href="main/auth/login/login.html" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                <i class="btn-icon bi-person"></i>
+                <span>Log in</span>
+            </a>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-auto me-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="#section_1">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="forms/offer/offer-form.html">Write an offer</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="index.html">Landing page</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="comments/comment.html">Comments</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="404/404.html">404</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll" href="profile/profile.html">Profile</a>
+                </li>
+
+                <li class="nav-item">
+                    <select class="form-select language-select" aria-label="Select language">
+                        <option value="en" selected>
+                            English
+                        </option>
+                        <option value="uz">
+                            Uzbek
+                        </option>
+                        <option value="ru">
+                            Rus
+                        </option>
+                    </select>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- / navbar-->
+
+<div class="container" style="margin-top: 120px;">
+    <div id="button-container">
+        <div class="select-category mr-5">
+            <select class="form-select" id='data-selector' aria-label="Select category">
+                <option value="offers">Show Offers</option>
+                <option value="demands">Show Demands</option>
+                <option value="my-offers">Show My Offers</option>
+                <option value="my-written-offers">Show My Written Offers</option>
+            </select>
+        </div>
+        <div class="input-group ml-5">
+            <form>
+                <input type="text" class="form-control" placeholder="Search..."
+                       aria-label="Search"
+                       aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary" type="button" id="button-addon2">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div id="card-container" class="row">
+        <h2 style="margin: 15px 5px">Offers</h2>
+
+        <!--
+            Har bitta divni ichida o'zini classi bor. Ya'ni offer cardlari uchun offer degan,
+            demand cardlari uchun demand degan class lari bor ular majburiy agar ushalar qolib ketsa ekranga buttonni
+            bosganda malumotlarni chiqarib bermaydi. Bu classlarni nomi aynan qaysi categoriyaga
+            tegishli ekanligini aniqlab beradi
+        -->
+
+        <!--   Offers      -->
+        <div class="col-md-4 offer mb-4" style="margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 offer mb-4" style="margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 offer mb-4" style="margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 offer mb-4" style="margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Demands       -->
+
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Demands</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--  My Offers      -->
+
+        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--    My Written Offers       -->
+
+        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>My Written Offer</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
+            <div class="card">
+                <div class="img-avatar">
+                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
+                </div>
+                <div class="card-text">
+                    <div class="title-total">
+                        <div class="title">Ant Collector</div>
+                        <a href='#'>Morgan Sweeney</a>
+
+                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
+                            ants but none in their pants.
+                        </div>
+                        <div class="actions">
+                            <i class="bi bi-heart">15</i>
+                            <i class="bi bi-eye">25</i>
+                            <i class="bi bi-chat">5</i>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div id="pagination" class="text-center mb-4" style="margin-top: 50px;">
+        <button id="prev" class="btn" disabled>Previous</button>
+        <button id="next" class="btn">Next</button>
+    </div>
+    <div id="page-info" class="text-center"></div>
+</div>
+
+<!--footer-->
+
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <span>Copyright © 2024, All Right Reserved Najot Ta'lim Feedback</span>
+            </div>
+            <!-- End Col -->
+            <div class="col-md-6">
+                <div class="copyright-menu">
+                    <ul>
+                        <li>
+                            <a href="#">Home</a>
+                        </li>
+                        <li>
+                            <a href="#">Terms</a>
+                        </li>
+                        <li>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End col -->
+        </div>
+        <!-- End Row -->
+    </div>
+    <!-- End Copyright Container -->
+</div>
+
+<!--footer-->
+
+<!--JAVASCRIPT FILES-->
+<script src="{% static 'js/bootstrap/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/bootstrap/jquery.sticky.js' %}"></script>
+<script src="{% static 'js/bootstrap/click-scroll.js' %}"></script>
+<script src="{% static 'js/bootstrap/custom.js' %}"></script>
+
+<!-- Local JavaScript -->
+<script src="{% static 'js/all_offers/script.js' %}"></script>
+</body>
+</html>
