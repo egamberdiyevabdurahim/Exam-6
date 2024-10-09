@@ -8,6 +8,14 @@
     position: relative;
 }
 
+
+#offer-title {
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+
 .slider .slides-track {
     animation: scroll var(--animationSpeed) linear infinite;
     display: flex;

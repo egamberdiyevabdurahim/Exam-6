@@ -40,30 +40,32 @@
                 <button type="button" class="btn btn-secondary" id="signInBtn">Offers</button>
                 <button type="button" class="btn btn-secondary active" id="signUpBtn">Problems</button>
             </div>
-            <a href="index.html" type="button" class="btn btn-secondary back-home">Home</a>
-            <form id="signUpForm">
+            <a href="{% url 'common:home' %}" type="button" class="btn btn-secondary back-home">Home</a>
+            <form id="signUpForm" method="post" action="{% url 'post:create_problem' %}">
+                {% csrf_token %}
                 <h4 class="form-title">Submit a problem</h4>
                 <div class="form-group mt-4">
                     <label for="problemTitle">Title</label>
-                    <input type="text" class="form-control" id="problemTitle" placeholder="Enter problem title">
+                    <input type="text" class="form-control" id="problemTitle" placeholder="Enter problem title" name="title">
                 </div>
                 <div class="form-group">
                     <label for="problemDescription">Description</label>
                     <textarea class="form-control" id="problemDescription"
-                              placeholder="Enter problem description" maxlength="2000"></textarea>
+                              placeholder="Enter problem description" maxlength="2000" name="description"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            <form id="signInForm" style="display: none;">
+            <form id="signInForm" style="display: none;" method="post" action="{% url 'post:create_offer' %}">
+                {% csrf_token %}
                 <h4 class="form-title">Submit a offer</h4>
                 <div class="form-group mt-4">
                     <label for="offerTitle">Title</label>
-                    <input type="text" class="form-control" id="offerTitle" placeholder="Enter offer title">
+                    <input type="text" class="form-control" id="offerTitle" placeholder="Enter offer title" name="title">
                 </div>
                 <div class="form-group">
                     <label for="offerDescription">Description</label>
                     <textarea class="form-control" id="offerDescription"
-                              placeholder="Enter offer description" maxlength="2000"></textarea>
+                              placeholder="Enter offer description" maxlength="2000" name="description"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

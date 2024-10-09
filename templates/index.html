@@ -43,7 +43,7 @@
             </a>
 
             <div class="d-lg-none ms-auto me-3">
-                <a href="main/auth/login/login.html" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                <a href="{% url 'users:login' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
                     <i class="btn-icon bi-person"></i>
                     <span>Log in</span>
                 </a>
@@ -62,11 +62,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="main/forms/offer/offer-form.html">{% trans 'Problems' %}</a>
+                        <a class="nav-link" href="{% url 'post:create_problem' %}">{% trans 'Problems' %}</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="main/offers/offer.html">{% trans 'Offers' %}</a>
+                        <a class="nav-link" href="{% url 'post:create_offer' %}">{% trans 'Offers' %}</a>
                     </li>
 
                     <li class="nav-item">
@@ -87,7 +87,7 @@
                 </ul>
 
                 <div class="d-none d-lg-block">
-                    <a href="main/auth/login/login.html"
+                    <a href="{% url 'users:login' %}"
                        class="btn custom-btn custom-border-btn btn-naira btn-inverted">
                         <i class="btn-icon bi-person"></i>
                         <span>Log in</span>
@@ -306,13 +306,12 @@
                                 <div class="col-lg-4 col-12 p-3">
                                     <div class="custom-block d-flex flex-wrap">
                                         <div class="custom-block-image-wrap d-flex flex-column">
-                                            <img src="{{ offer.profile.avatar.url }}"
+                                            <img src="{{ offer.user.profile.avatar.url }}"
                                                  class="img-fluid avatar-image" alt="">
 
                                             <div class="text-center mt-3">
-                                                <span class="text-white">{{ offer.user.full_name }}</span>
+                                                <span class="text-white">{{ offer.user.get_full_name }}</span>
 
-                                                <strong class="d-block text-white">Student</strong>
                                             </div>
                                         </div>
 
@@ -326,8 +325,8 @@
                                                 <i class="bi-star-fill"></i>
                                                 <i class="bi-star"></i>
                                             </div>
-
-                                            <p class="mb-0">{{ offer.description }}</p>
+                                            <h5 id="offer-title" class="danger">{{ offer.title | truncatewords:4 }}</h5>
+                                            <p class="mb-0">{{ offer.description | truncatechars:200 }}</p>
                                         </div>
                                     </div>
                                 </div>

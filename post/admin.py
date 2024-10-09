@@ -18,8 +18,8 @@ class UsefulAdmin(TranslationAdmin):
 
 
 @admin.register(ProblemModel)
-class ProblemModelAdmin(UsefulAdmin):
-    list_display = ('id', 'title', 'user__username', 'created_at')
+class ProblemModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'user__username', 'created_at', 'is_pinned')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
@@ -28,12 +28,12 @@ class ProblemModelAdmin(UsefulAdmin):
                      'user__email',
                      'user__first_name',
                      'user__last_name')
-    list_filter = ('created_at', 'user__email')
+    list_filter = ('created_at', 'user__email', 'is_pinned')
 
 
 @admin.register(OfferModel)
-class OfferModelAdmin(UsefulAdmin):
-    list_display = ('id', 'title', 'user__username', 'created_at')
+class OfferModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'user__username', 'created_at', 'is_pinned')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
@@ -42,7 +42,7 @@ class OfferModelAdmin(UsefulAdmin):
                      'user__email',
                      'user__first_name',
                      'user__last_name')
-    list_filter = ('created_at', 'user__email')
+    list_filter = ('created_at', 'user__email', 'is_pinned')
 
 
 @admin.register(CommentOfferModel)

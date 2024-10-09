@@ -1,11 +1,12 @@
 <!doctype html>
 {% load static %}
+{% load i18n %}
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | Najot Ta'lim - Feedback site </title>
+    <title>Login | Najot Ta'lim - {% trans 'Feedback site' %} </title>
     <link rel="shortcut icon" type="ico" href="files/images/favicon.ico"/>
     <link rel="stylesheet" href="{% static 'css/auth/login/style.css' %}">
     <!-- CSS FILES -->
@@ -31,9 +32,9 @@
 <div class="parent-div">
     <div class="main-div">
         <div class="main-logo">
-            <a href="index.html" style="color: #000000">
+            <a href="{% url 'common:home' %}" style="color: #000000">
                 <img src="{% static 'files/images/logo.png' %}" alt="404" class="logo-style">
-                Najot Ta'lim Feedback
+                Najot Ta'lim {% trans 'Feedback' %}
             </a>
         </div>
         <div class="form-items">
@@ -44,18 +45,19 @@
             </div>
             <div class="login-form">
                 <div class="col-lg-12 col-12 mx-auto">
-                    <form class="custom-form" action="#" method="post" role="form">
+                    <form class="custom-form" action="{% url 'users:login' %}" method="post" role="form">
+                        {% csrf_token %}
                         <div class="text-center mb-5">
-                            <p class="mb-1" style="text-align: end">Welcome to <h6 style="text-align: end"><b>Najot
-                            Ta'lim Feedback</b></h6></p>
+                            <p class="mb-1" style="text-align: end">{% trans 'Welcome to' %} <h6 style="text-align: end"><b>Najot
+                            Ta'lim {% trans 'Feedback' %}</b></h6></p>
                         </div>
                         <div>
                             <p style="text-align: start"><b>Login</b></p>
                             <div class="input-group mb-3">
-                                <input type="text" name="username" id="username"
+                                <input type="text" name="username_or_email" id="username"
                                        class="form-control login-form-input"
                                        aria-label="username" aria-describedby="basic-addon1"
-                                       placeholder="Username" required>
+                                       placeholder="{% trans 'Username or Email' %}" required>
 
                                 <span class="input-group-text" id="basic-addon1">
                                             <i class="custom-form-icon bi-person"></i>
@@ -65,18 +67,18 @@
                                 <input type="password" name="message_title" id="password"
                                        class="form-control login-form-input"
                                        aria-label="user_password" aria-describedby="basic-addon1"
-                                       placeholder="Password" required>
+                                       placeholder="{% trans 'Password' %}" required>
 
                                 <span class="input-group-text" id="basic-addon">
                                             <i class="custom-form-icon bi-person"></i>
                                         </span>
                             </div>
                             <div class="col-lg-8 col-md-10 col-8 mx-auto mb-2">
-                                <button type="submit" class="form-control" style="text-align: center">Login</button>
+                                <button type="submit" class="form-control" style="text-align: center">{% trans 'Login' %}</button>
                             </div>
                             <div style="padding-top: 10px; text-align: center;">
-                                <p style="font-size: 13px">Does your account not exist? <a
-                                        href="register/register.html">Create account</a>
+                                <p style="font-size: 13px">{% trans 'Does your account not exist' %}? <a
+                                        href="{% url 'users:register' %}">{% trans 'Create account' %}</a>
                                 </p>
                             </div>
                         </div>
