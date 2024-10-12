@@ -64,8 +64,10 @@
                 {% endif %}
                 <span>{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</span>
             </form>
+            {% if offer.user is not None %}
             <a href="{% url 'users:profile' pk=offer.user.pk %}"><img class="user-profile" src="{{ offer.user.profile.avatar.url }}"
                  alt="404" class="account-profile" alt="404"></a>
+            {% endif %}
         </div>
     </div>
     <div class="wrapper">

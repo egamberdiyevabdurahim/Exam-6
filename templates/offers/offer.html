@@ -170,7 +170,7 @@
                 </div>
                 <div class="card-text">
                     <div class="title-total">
-                        {% if not problem.user %}
+                        {% if problem.user is None %}
                         <div class="title">{{ 'Anonymous' }} | {% trans 'problem' %}</div>
                         {% else %}
                         <a href="{% url 'users:profile' pk=problem.user.pk %}"><div class="title">{{ problem.user.get_full_name }} | problem</div></a>
