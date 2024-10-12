@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
+{% load my_tags %}
+{% get_url request as my_url %}
+{% encode_url my_url as encoded_url %}
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Najot Ta'lim | Offers</title>
+    <title>Najot Ta'lim | {% trans 'Offers' %}</title>
 
     <!-- CSS    -->
     <link rel="stylesheet" href="{% static 'css/offers/style.css' %}">
@@ -26,17 +30,10 @@
 
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="offer.html">
+        <a class="navbar-brand" href="{% url 'common:home' %}">
             <i><img src="{% static 'files/images/logo.png' %}" alt="404" style="width: 60px;"></i>
             <span>Najot Ta'lim</span>
         </a>
-
-        <div class="d-lg-none ms-auto me-3">
-            <a href="main/auth/login/login.html" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                <i class="btn-icon bi-person"></i>
-                <span>Log in</span>
-            </a>
-        </div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,44 +43,49 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-lg-auto me-lg-4">
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_1">Home</a>
+                    <a class="nav-link click-scroll" href="{% url 'common:home' %}">{% trans 'Home' %}</a>
                 </li>
 
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="forms/offer/offer-form.html">Write an offer</a>
+                    <a class="nav-link click-scroll" href="{% url 'users:profile' pk=request.user.pk %}">{% trans 'Profile' %}</a>
                 </li>
+                {% endif %}
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.html">Landing page</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="comments/comment.html">Comments</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="404/404.html">404</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="profile/profile.html">Profile</a>
-                </li>
-
-                <li class="nav-item">
-                    <select class="form-select language-select" aria-label="Select language">
-                        <option value="en" selected>
-                            English
+                    <select class="form-select language-select" aria-label="{% trans 'Select language' %}" onchange="location=this.value">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for lang in languages %}
+                        {% if lang.code != LANGUAGE_CODE %}
+                        <option value="{% get_full_url request lang.code %}">
+                            {{ lang.name_local }}
                         </option>
-                        <option value="uz">
-                            Uzbek
+                        {% else %}
+                        <option value="{% get_full_url request lang.code %}" disabled selected>
+                            {{ lang.name_local }}
                         </option>
-                        <option value="ru">
-                            Rus
-                        </option>
+                        {% endif %}
+                        {% endfor %}
                     </select>
-
                 </li>
             </ul>
+            <div class="d-none d-lg-block">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'users:logout' url=encoded_url %}"
+                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                        <i class="btn-icon bi-person"></i>
+                        <span>{% trans 'Log out' %}</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'users:login' url=encoded_url %}"
+                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                        <i class="btn-icon bi-person"></i>
+                        <span>{% trans 'Log in' %}</span>
+                    </a>
+                    {% endif %}
+            </div>
         </div>
     </div>
 </nav>
@@ -93,18 +95,20 @@
 <div class="container" style="margin-top: 120px;">
     <div id="button-container">
         <div class="select-category mr-5">
-            <select class="form-select" id='data-selector' aria-label="Select category">
-                <option value="offers">Show Offers</option>
-                <option value="demands">Show Demands</option>
-                <option value="my-offers">Show My Offers</option>
-                <option value="my-written-offers">Show My Written Offers</option>
+            <select class="form-select" id='data-selector' aria-label="{% trans 'Select category' %}">
+                <option value="offers">{% trans 'Show Offers' %}</option>
+                <option value="demands">{% trans 'Show Problems' %}</option>
+                {% if request.user.is_authenticated %}
+                <option value="my-offers">{% trans 'Show My Offers' %}</option>
+                <option value="my-written-offers">{% trans 'Show My Written Comments' %}</option>
+                {% endif %}
             </select>
         </div>
         <div class="input-group ml-5">
             <form>
-                <input type="text" class="form-control" placeholder="Search..."
+                <input type="text" class="form-control" placeholder="{% trans 'Search' %}..."
                        aria-label="Search"
-                       aria-describedby="button-addon2">
+                       aria-describedby="button-addon2" name="q" value="{{ q }}">
                 <button class="btn btn-outline-primary" type="button" id="button-addon2">
                     <i class="bi bi-search"></i>
                 </button>
@@ -112,16 +116,10 @@
         </div>
     </div>
     <div id="card-container" class="row">
-        <h2 style="margin: 15px 5px">Offers</h2>
-
-        <!--
-            Har bitta divni ichida o'zini classi bor. Ya'ni offer cardlari uchun offer degan,
-            demand cardlari uchun demand degan class lari bor ular majburiy agar ushalar qolib ketsa ekranga buttonni
-            bosganda malumotlarni chiqarib bermaydi. Bu classlarni nomi aynan qaysi categoriyaga
-            tegishli ekanligini aniqlab beradi
-        -->
+        <h2 style="margin: 15px 5px">{% trans 'Offers' %}</h2>
 
         <!--   Offers      -->
+        {% for offer in offers %}
         <div class="col-md-4 offer mb-4" style="margin-top: 25px">
             <div class="card">
                 <div class="img-avatar">
@@ -129,101 +127,42 @@
                 </div>
                 <div class="card-text">
                     <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
+                        <a href="{% url 'users:profile' pk=offer.user.pk %}"><div class="title">{{ offer.user.get_full_name }} | {% trans 'offer' %}</div></a>
+                        <a href='{% url "post:offer_detail" pk=offer.pk url=encoded_url %}'>{{ offer.title | truncatechars:70 }}</a>
+                        <div class="desc">{{ offer.description | truncatechars:140 }}</div>
                         <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
+                            <form method="post" action="{% if offer.ip_address is None %}{% url 'post:like_offer' pk=offer.pk %}{% else %}{% url 'post:like_problem' pk=offer.pk %}{% endif %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="before" value="{{ my_url }}">
+                                <div class="action-icons">
+                                    {% if request.user.is_authenticated %}
+                                    {% if request.user in offer.likes.user.all %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart-fill liked-icon">{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart unliked-icon">{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% endif %}
+                                    {% else %}
+                                    <i class="bi bi-heart unliked-icon">{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</i>
+                                    {% endif %}
+                                    <i class="bi bi-eye view-icon action-item">{{ offer.total_views }}</i>
+                                    <i class="bi bi-chat comment-icon action-item">{{ offer.total_comments }}</i>
+                                </div>
+                            </form>
                         </div>
+
                     </div>
 
                 </div>
-
-
             </div>
         </div>
-        <div class="col-md-4 offer mb-4" style="margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 offer mb-4" style="margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 offer mb-4" style="margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
+        {% endfor %}
 
         <!-- Demands       -->
-
+        {% for problem in problems %}
         <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
             <div class="card">
                 <div class="img-avatar">
@@ -231,202 +170,46 @@
                 </div>
                 <div class="card-text">
                     <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Demands</a>
+                        {% if not problem.user %}
+                        <div class="title">{{ 'Anonymous' }} | {% trans 'problem' %}</div>
+                        {% else %}
+                        <a href="{% url 'users:profile' pk=problem.user.pk %}"><div class="title">{{ problem.user.get_full_name }} | problem</div></a>
+                        {% endif %}
+                        <a href='{% url "post:problem_detail" pk=problem.pk url=encoded_url %}'>{{ problem.title | truncatechars:70 }}</a>
 
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
+                        <div class="desc">{{ problem.description | truncatechars:140 }}</div>
                         <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
+                            <form method="post" action="{% if problem.ip_address is None %}{% url 'post:like_offer' pk=problem.pk %}{% else %}{% url 'post:like_problem' pk=problem.pk %}{% endif %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="before" value="{{ my_url }}">
+                                <div class="action-icons">
+                                    {% if request.user.is_authenticated %}
+                                    {% if request.user in problem.likes.user.all %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart-fill">{% if problem.total_likes > 0 %}{{ problem.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart">{% if problem.total_likes > 0 %}{{ problem.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% endif %}
+                                    {% else %}
+                                    <i class="bi bi-heart">{% if problem.total_likes > 0 %}{{ problem.total_likes }}{% else %}0{% endif %}</i>
+                                    {% endif %}
+                                    <i class="bi bi-eye action-item">{{ problem.total_views }}</i>
+                                    <i class="bi bi-chat action-item">{{ problem.total_comments }}</i>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
-        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 demand mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
+        {% endfor %}
 
         <!--  My Offers      -->
 
+        {% for my_offer in my_offers %}
         <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
             <div class="card">
                 <div class="img-avatar">
@@ -434,177 +217,43 @@
                 </div>
                 <div class="card-text">
                     <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
+                        <div class="title">{% trans 'Mine' %} | {% trans 'offer' %}</div>
+                        <a href='{% url "post:offer_detail" pk=my_offer.pk url=encoded_url %}'>{{ my_offer.title | truncatechars:70 }}</a>
 
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
+                        <div class="desc">{{ my_offer.description | truncatechars:140 }}</div>
                         <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
+                            <form method="post" action="{% if my_offer.ip_address is None %}{% url 'post:like_offer' pk=my_offer.pk %}{% else %}{% url 'post:like_problem' pk=my_offer.pk %}{% endif %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="before" value="{{ my_url }}">
+                                <div class="action-icons">
+                                    {% if request.user.is_authenticated %}
+                                    {% if request.user in my_offer.likes.user.all %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart-fill">{% if my_offer.total_likes > 0 %}{{ my_offer.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart">{% if my_offer.total_likes > 0 %}{{ my_offer.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% endif %}
+                                    {% else %}
+                                    <i class="bi bi-heart">{% if my_offer.total_likes > 0 %}{{ my_offer.total_likes }}{% else %}0{% endif %}</i>
+                                    {% endif %}
+                                    <i class="bi bi-eye action-item">{{ my_offer.total_views }}</i>
+                                    <i class="bi bi-chat action-item">{{ my_offer.total_comments }}</i>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
-        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
+        {% endfor %}
 
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
 
         <!--    My Written Offers       -->
 
+        {% for my_comment in my_comments %}
         <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
             <div class="card">
                 <div class="img-avatar">
@@ -612,153 +261,51 @@
                 </div>
                 <div class="card-text">
                     <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>My Written Offer</a>
+                        {% if my_comment.user is None %}
+                        <div class="title">{% trans 'Anonymous' %} | {% trans 'problem' %}</div>
+                        {% else %}
+                        <a href="{% url 'users:profile' pk=my_comment.user.pk %}"><div class="title">{{ my_comment.user.get_full_name }}
+                            | {% if my_comment.ip_address is None %}{% trans 'offer' %}{% else %}{% trans 'problem' %}{% endif %}</div></a>
+                        {% endif %}
+                        {% if my_comment.ip_address is None %}
+                        <a href='{% url "post:offer_detail" pk=my_comment.pk url=encoded_url %}'>{{ my_comment.title | truncatechars:70 }}</a>
+                        {% else %}
+                        <a href='{% url "post:problem_detail" pk=my_comment.pk url=encoded_url %}'>{{ my_comment.title | truncatechars:70 }}</a>
+                        {% endif %}
 
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
+                        <div class="desc">{{ my_comment.description | truncatechars:140 }}</div>
                         <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
+                            <form method="post" action="{% if offer.ip_address is None %}{% url 'post:like_offer' pk=my_comment.pk %}{% else %}{% url 'post:like_problem' pk=my_comment.pk %}{% endif %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="before" value="{{ my_url }}">
+                                <div class="action-icons">
+                                    {% if request.user.is_authenticated %}
+                                    {% if request.user in my_comment.likes.user.all %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart-fill">{% if my_comment.total_likes > 0 %}{{ my_comment.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn action-item">
+                                            <i class="bi bi-heart">{% if my_comment.total_likes > 0 %}{{ my_comment.total_likes }}{% else %}0{% endif %}</i>
+                                        </button>
+                                    {% endif %}
+                                    {% else %}
+                                    <i class="bi bi-heart">{% if my_comment.total_likes > 0 %}{{ my_comment.total_likes }}{% else %}0{% endif %}</i>
+                                    {% endif %}
+                                    <i class="bi bi-eye action-item">{{ my_comment.total_views }}</i>
+                                    <i class="bi bi-chat action-item">{{ my_comment.total_comments }}</i>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
-        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-        <div class="col-md-4 my-written-offers mb-4" style="display: none; margin-top: 25px">
-            <div class="card">
-                <div class="img-avatar">
-                    <img src="{% static 'files/images/white-logo.png' %}" alt="Avatar">
-                </div>
-                <div class="card-text">
-                    <div class="title-total">
-                        <div class="title">Ant Collector</div>
-                        <a href='#'>Morgan Sweeney</a>
-
-                        <div class="desc">Morgan has collected ants since they were six years old and now has many dozen
-                            ants but none in their pants.
-                        </div>
-                        <div class="actions">
-                            <i class="bi bi-heart">15</i>
-                            <i class="bi bi-eye">25</i>
-                            <i class="bi bi-chat">5</i>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
+        {% endfor %}
     </div>
     <div id="pagination" class="text-center mb-4" style="margin-top: 50px;">
-        <button id="prev" class="btn" disabled>Previous</button>
-        <button id="next" class="btn">Next</button>
+        <button id="prev" class="btn" disabled>{% trans 'Previous' %}</button>
+        <button id="next" class="btn">{% trans 'Next' %}</button>
     </div>
     <div id="page-info" class="text-center"></div>
 </div>
@@ -769,23 +316,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <span>Copyright © 2024, All Right Reserved Najot Ta'lim Feedback</span>
+                <span>{% trans "Copyright © 2024, All Right Reserved Najot Ta'lim Feedback" %}</span>
             </div>
             <!-- End Col -->
             <div class="col-md-6">
                 <div class="copyright-menu">
                     <ul>
                         <li>
-                            <a href="#">Home</a>
-                        </li>
-                        <li>
-                            <a href="#">Terms</a>
-                        </li>
-                        <li>
-                            <a href="#">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="#">Contact</a>
+                            <a href="{% url 'common:home' %}">Home</a>
                         </li>
                     </ul>
                 </div>

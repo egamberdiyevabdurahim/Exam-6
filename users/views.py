@@ -10,8 +10,10 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
 from conf.settings import EMAIL_HOST_USER
-from users.form import RegisterForm, LoginForm
+from users.form import RegisterForm, LoginForm, EditProfileForm
+from users.models import ProfileModel
 from users.token import email_token_generator
+from utils.hasher import decode_url
 
 
 def verify_email(request, uidb64, token):
@@ -24,9 +26,9 @@ def verify_email(request, uidb64, token):
             login(request, user)
             return redirect(reverse_lazy('common:home'))
         else:
-            return redirect(reverse_lazy('users:login'))
+            return redirect(reverse_lazy('common:home'))
     except Exception:
-        return redirect(reverse_lazy('users:login'))
+        return redirect(reverse_lazy('common:home'))
 
 
 def send_email_verification(request, user):
@@ -52,7 +54,9 @@ def send_email_verification(request, user):
     message.send()
 
 
-def login_view(request):
+def login_view(request, url=None):
+    redirect_url = decode_url(url) if url else '/'
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -82,19 +86,35 @@ def login_view(request):
                 user = authenticate(request=request, username=username, password=password)
                 if user:
                     login(request, user)
-                    return redirect(reverse_lazy('home'))
+                    return redirect(redirect_url)
                 else:
                     return render(request, 'auth/login.html', {
-                        'error': 'Invalid login details or account not activated. Please check your email.'
+                        'form': form,
+                        'error': 'Invalid login details or account not activated. Please check your email.',
+                        'redirect_url': url,
+                        'form_data': request.POST,
                     })
             else:
-                return render(request, 'auth/login.html', {'error': 'Username of Password error'})
-
+                return render(request, 'auth/login.html', {
+                    'form': form,
+                    'error': 'Username or Password error',
+                    'redirect_url': url,
+                    'form_data': request.POST,
+                })
+        else:
+            return render(request, 'auth/login.html', {
+                'form': form,
+                'error': 'Invalid form submission',
+                'redirect_url': url,
+                'form_data': request.POST,
+            })
     else:
-        return render(request, 'auth/login.html')
+        form = LoginForm()
+        return render(request, 'auth/login.html', {'form': form, 'redirect_url': url})
 
 
-def register_view(request):
+def register_view(request, url):
+    redirect_url = decode_url(url)
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -102,18 +122,76 @@ def register_view(request):
             user.set_password(form.cleaned_data['password1'])
             user.is_active = False
             user.save()
+            ProfileModel.objects.create(
+                user_id=user.pk,
+            )
             send_email_verification(request, user)
-            return redirect(reverse_lazy('users:login'))
+            return redirect(redirect_url)
         else:
-            errors = form.errors
-            print("-"*50)
-            print(errors)
-            print("-"*50)
-            return render(request, 'auth/register.html', {'errors': errors})
+            context = {
+                'redirect_url': url,
+                'errors': form.errors,
+                'form_data': request.POST,
+            }
+            return render(request, 'auth/register.html', context)
     else:
-        return render(request, 'auth/register.html')
+        context = {
+            'redirect_url': url,
+        }
+        return render(request, 'auth/register.html', context)
 
 
-def logout_view(request):
+def logout_view(request, url):
+    redirect_url = decode_url(url)
     logout(request)
-    return redirect(reverse_lazy('home'))
+    return redirect(redirect_url)
+
+
+def profile_view(request, pk):
+    user = User.objects.filter(pk=pk).first()
+    context = {
+        'user': user,
+    }
+    return render(request, 'profile/profile.html', context)
+
+
+def profile_edit_view(request, pk):
+    user = User.objects.filter(pk=pk).first()
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            if first_name is None:
+                first_name = user.first_name
+
+            last_name = form.cleaned_data['last_name']
+            if last_name is None:
+                last_name = user.last_name
+
+            organization_name = form.cleaned_data['organization_name']
+            if organization_name is None:
+                organization_name = user.profile.organization_name
+
+            location = form.cleaned_data['location']
+            if location is None:
+                location = user.profile.location
+
+            linkedin_url = form.cleaned_data['linkedin_link']
+            if linkedin_url is None:
+                linkedin_url = user.profile.linkedin_link
+
+            avatar = form.cleaned_data['avatar']
+            if avatar is None:
+                avatar = user.profile.avatar
+
+            user.first_name = first_name
+            user.last_name = last_name
+            user.profile.organization_name = organization_name
+            user.profile.location = location
+            user.profile.linkedin_link = linkedin_url
+            user.profile.avatar = avatar
+            user.save()
+            user.profile.save()
+            return redirect(reverse('users:profile', kwargs={'pk': user.pk}))
+        else:
+            return render(request, 'profile/edit_profile.html', {'user': user})

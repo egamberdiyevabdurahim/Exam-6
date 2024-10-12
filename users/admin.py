@@ -30,16 +30,3 @@ class TeamModelAdmin(UsefulAdmin):
                      'last_name',
                      'profession')
     list_filter = ('created_at', 'profession')
-
-
-# @admin.register(User)
-# class UserAdmin(UserAdmin):
-#     list_display = ('id', 'email', 'first_name', 'last_name', 'username', 'created_at')
-#     list_display_links = list_display
-#     ordering = ('-created_at',)
-#     search_fields = ('id',
-#                      'email',
-#                      'first_name',
-#                      'last_name',
-#                      'username')
-#     list_filter = ('created_at', 'email')

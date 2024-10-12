@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-08 21:51+0000\n"
+"POT-Creation-Date: 2024-10-12 21:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,9 +32,10 @@ msgstr ""
 msgid "About Us"
 msgstr ""
 
-#: common/models.py:26 common/models.py:33
+#: common/models.py:26 common/models.py:33 templates/index.html:177
+#: templates/index.html:188
 msgid "Question"
-msgstr ""
+msgstr "Вопрос"
 
 #: common/models.py:27
 msgid "Answer"
@@ -42,135 +43,463 @@ msgstr ""
 
 #: common/models.py:34
 msgid "Questions"
-msgstr ""
+msgstr "Ответы"
 
-#: post/models.py:8 post/models.py:22
+#: post/models.py:8 post/models.py:32 templates/forms/offer-form.html:59
+#: templates/forms/offer-form.html:98 templates/forms/offer-form.html:113
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
-#: post/models.py:9 post/models.py:23
+#: post/models.py:9 post/models.py:33 templates/forms/offer-form.html:63
+#: templates/forms/offer-form.html:84 templates/forms/offer-form.html:102
+#: templates/forms/offer-form.html:117 users/models.py:27
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
-#: post/models.py:11 post/models.py:25
+#: post/models.py:11 post/models.py:35
 msgid "Is pinned"
 msgstr ""
 
-#: post/models.py:17
+#: post/models.py:19 templates/index.html:60
 msgid "Problem"
-msgstr ""
+msgstr "Проблема"
 
-#: post/models.py:18 templates/index.html:64 templates/index.html:109
+#: post/models.py:20 templates/forms/offer-form.html:47
+#: templates/forms/offer-form.html:50 templates/index.html:119
 msgid "Problems"
 msgstr "Проблемы"
 
-#: post/models.py:31
+#: post/models.py:42 templates/index.html:64
 msgid "Offer"
-msgstr ""
+msgstr "Предложение"
 
-#: post/models.py:32 templates/index.html:68
+#: post/models.py:43 templates/forms/offer-form.html:46
+#: templates/forms/offer-form.html:49 templates/offers/offer.html:10
+#: templates/offers/offer.html:119
 msgid "Offers"
 msgstr "Предложения"
 
-#: post/models.py:36 post/models.py:49
+#: post/models.py:55 post/models.py:72 templates/comments/comment.html:12
 msgid "Comment"
-msgstr ""
+msgstr "Комментарий"
 
-#: post/models.py:44
+#: post/models.py:63
 msgid "Comment on Problem"
 msgstr ""
 
-#: post/models.py:45
+#: post/models.py:64
 msgid "Comments on Problem"
 msgstr ""
 
-#: post/models.py:57
+#: post/models.py:80
 msgid "Comment on Offer"
 msgstr ""
 
-#: post/models.py:58
+#: post/models.py:81
 msgid "Comments on Offer"
 msgstr ""
 
-#: templates/index.html:12
+#: post/models.py:97
+#, fuzzy
+#| msgid "Offers"
+msgid "Like Offer"
+msgstr "Предложения"
+
+#: post/models.py:98
+#, fuzzy
+#| msgid "Offers"
+msgid "Like Offers"
+msgstr "Предложения"
+
+#: post/models.py:110
+#, fuzzy
+#| msgid "Problems"
+msgid "Like Problem"
+msgstr "Проблемы"
+
+#: post/models.py:111
+#, fuzzy
+#| msgid "Problems"
+msgid "Like Problems"
+msgstr "Проблемы"
+
+#: post/models.py:123
+msgid "Like Offer Comment"
+msgstr ""
+
+#: post/models.py:124
+msgid "Like Offer Comments"
+msgstr ""
+
+#: post/models.py:136
+msgid "Like Problem Comment"
+msgstr ""
+
+#: post/models.py:137
+msgid "Like Problem Comments"
+msgstr ""
+
+#: templates/auth/login.html:12 templates/auth/register.html:10
+#: templates/index.html:15
 msgid "Feedback site"
 msgstr "Сайт обратной связи"
 
-#: templates/index.html:60 templates/index.html:715
+#: templates/auth/login.html:40 templates/auth/login.html:55
+#: templates/auth/register.html:40 templates/auth/register.html:57
+#, fuzzy
+#| msgid "Feedback site"
+msgid "Feedback"
+msgstr "Сайт обратной связи"
+
+#: templates/auth/login.html:54 templates/auth/register.html:56
+msgid "Welcome to"
+msgstr "Добро пожаловать в"
+
+#: templates/auth/login.html:58 templates/auth/login.html:80
+msgid "Login"
+msgstr "Авторизоваться"
+
+#: templates/auth/login.html:63
+msgid "Username or Email"
+msgstr "Имя пользователя или адрес электронной почты"
+
+#: templates/auth/login.html:73 templates/auth/register.html:105
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/auth/login.html:83
+msgid "Does your account not exist"
+msgstr "Ваш аккаунт не существует"
+
+#: templates/auth/login.html:84
+msgid "Create account"
+msgstr "Зарегистрироваться"
+
+#: templates/auth/register.html:10 templates/auth/register.html:60
+#: templates/auth/register.html:123
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: templates/auth/register.html:65 templates/profile/profile.html:127
+msgid "First name"
+msgstr "Имя"
+
+#: templates/auth/register.html:75 templates/profile/profile.html:134
+msgid "Last name"
+msgstr "Фамилия"
+
+#: templates/auth/register.html:85
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: templates/auth/register.html:95
+msgid "Email"
+msgstr "Электронная почта"
+
+#: templates/auth/register.html:115
+msgid "Confirm Password"
+msgstr "Подтвердите пароль"
+
+#: templates/auth/register.html:126
+msgid "Do you have an account"
+msgstr "У вас есть аккаунт"
+
+#: templates/auth/register.html:126 templates/index.html:101
+#: templates/offers/offer.html:85 templates/profile/profile.html:81
+msgid "Log in"
+msgstr "Авторизоваться"
+
+#: templates/auth/verify_email.html:11 templates/auth/verify_email.html:13
+msgid "Confirm Email"
+msgstr "Подтвердите адрес электронной почты"
+
+#: templates/auth/verify_email.html:12
+msgid ""
+"Thank you for registering with us. Please confirm your email address by "
+"clicking the link below."
+msgstr ""
+"Спасибо за регистрацию у нас. Пожалуйста, подтвердите свой адрес электронной "
+"почты, нажав на ссылку ниже."
+
+#: templates/comments/comment.html:35
+#, fuzzy
+#| msgid "Offers"
+msgid "All Offers"
+msgstr "Все предложения"
+
+#: templates/comments/comment.html:74
+msgid "Who wrote a comment"
+msgstr "Кто написал комментарий"
+
+#: templates/comments/comment.html:103 templates/comments/comment.html:148
+msgid "Message sent today at"
+msgstr "Сообщение отправлено сегодня в"
+
+#: templates/comments/comment.html:105 templates/comments/comment.html:150
+msgid "Message sent yesterday at"
+msgstr "Сообщение отправлено вчера в"
+
+#: templates/comments/comment.html:107 templates/comments/comment.html:152
+msgid "Message sent on"
+msgstr "Сообщение отправлено"
+
+#: templates/comments/comment.html:229
+msgid "Follow on LinkedIn"
+msgstr "Подпишитесь на LinkedIn"
+
+#: templates/comments/comment.html:249
+msgid "Offer description"
+msgstr "Описание предложения"
+
+#: templates/forms/offer-form.html:11
+#, fuzzy
+#| msgid "Offers"
+msgid "Offer Form"
+msgstr "Форма предложения"
+
+#: templates/forms/offer-form.html:53 templates/index.html:56
+#: templates/index.html:400 templates/offers/offer.html:46
+#: templates/profile/profile.html:48
 msgid "Home"
 msgstr "Основной"
 
-#: templates/index.html:105
+#: templates/forms/offer-form.html:57 templates/forms/offer-form.html:96
+#, fuzzy
+#| msgid "Problems"
+msgid "Submit a problem"
+msgstr "Сообщить о проблеме"
+
+#: templates/forms/offer-form.html:60 templates/forms/offer-form.html:99
+msgid "Enter problem title"
+msgstr "Введите название проблемы"
+
+#: templates/forms/offer-form.html:65 templates/forms/offer-form.html:104
+msgid "Enter problem description"
+msgstr "Введите описание проблемы"
+
+#: templates/forms/offer-form.html:70
+msgid "Send Anonymous"
+msgstr "Отправить Анонимно"
+
+#: templates/forms/offer-form.html:73 templates/forms/offer-form.html:88
+#: templates/forms/offer-form.html:106 templates/forms/offer-form.html:121
+msgid "Submit"
+msgstr "Представлять на рассмотрение"
+
+#: templates/forms/offer-form.html:78 templates/forms/offer-form.html:111
+msgid "Submit a offer"
+msgstr "Подать предложение"
+
+#: templates/forms/offer-form.html:81 templates/forms/offer-form.html:114
+msgid "Enter offer title"
+msgstr "Введите название предложения"
+
+#: templates/forms/offer-form.html:86 templates/forms/offer-form.html:119
+msgid "Enter offer description"
+msgstr "Введите описание предложения"
+
+#: templates/forms/offer-form.html:90 templates/forms/offer-form.html:123
+msgid "Log in to write Offer"
+msgstr "Авторизуйтесь, чтобы написать предложение"
+
+#: templates/index.html:68
+#, fuzzy
+#| msgid "Best offers & problems"
+msgid "Offers&Problems"
+msgstr "Лучшие предложения и проблемы"
+
+#: templates/index.html:95 templates/offers/offer.html:79
+#: templates/profile/profile.html:75
+msgid "Log out"
+msgstr "Выйти"
+
+#: templates/index.html:115
 msgid "Exchange of ideas"
 msgstr "Обмен идеями"
 
-#: templates/index.html:107
+#: templates/index.html:117
 msgid "Online platform for requests and offers"
 msgstr "Онлайн-платформа для запросов и предложений"
 
-#: templates/index.html:111
+#: templates/index.html:121
 msgid "Make an offer"
 msgstr "Сделать предложение"
 
-#: templates/index.html:139
+#: templates/index.html:149
 msgid "Brief information about the site"
 msgstr "Краткая информация о сайте"
 
-#: templates/index.html:164
+#: templates/index.html:168
 msgid "Questions - Answers"
 msgstr "Вопросы - Ответы"
 
-#: templates/index.html:166
+#: templates/index.html:170
 msgid "Frequently asked questions"
 msgstr "Часто задаваемые вопросы"
 
-#: templates/index.html:248
+#: templates/index.html:201
+msgid "Team"
+msgstr "Команда"
+
+#: templates/index.html:203
 msgid "About the participants in the team"
 msgstr "Об участниках команды"
 
-#: templates/index.html:447
+#: templates/index.html:250
 msgid "Appeals"
 msgstr "Апелляции"
 
-#: templates/index.html:449
+#: templates/index.html:252
 msgid "Best offers & problems"
 msgstr "Лучшие предложения и проблемы"
 
-#: templates/index.html:708
+#: templates/index.html:393 templates/offers/offer.html:319
 msgid "Copyright © 2024, All Right Reserved Najot Ta'lim Feedback"
 msgstr "Авторские права © 2024, Все права защищены Najot Ta'lim Обратная связь"
 
-#: templates/index.html:718
-msgid "Terms"
-msgstr "Условия"
-
-#: templates/index.html:721
-msgid "Privacy Policy"
-msgstr "политика конфиденциальности"
-
-#: templates/index.html:724
-msgid "Contact"
-msgstr "Контакт"
-
+#: templates/offers/offer.html:51 templates/profile/profile.html:10
 #: users/models.py:8 users/models.py:18
 msgid "Profile"
+msgstr "Профиль"
+
+#: templates/offers/offer.html:56
+msgid "Select language"
+msgstr "Выберите язык"
+
+#: templates/offers/offer.html:98
+msgid "Select category"
+msgstr "Выберите категорию"
+
+#: templates/offers/offer.html:99
+#, fuzzy
+#| msgid "Offers"
+msgid "Show Offers"
+msgstr "Показать предложения"
+
+#: templates/offers/offer.html:100
+#, fuzzy
+#| msgid "Problems"
+msgid "Show Problems"
+msgstr "Показать проблемы"
+
+#: templates/offers/offer.html:102
+#, fuzzy
+#| msgid "Offers"
+msgid "Show My Offers"
+msgstr "Показать мои предложения"
+
+#: templates/offers/offer.html:103
+msgid "Show My Written Comments"
+msgstr "Показать мои письменные комментарии"
+
+#: templates/offers/offer.html:109
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/offers/offer.html:130 templates/offers/offer.html:220
+#: templates/offers/offer.html:268
+#, fuzzy
+#| msgid "Offers"
+msgid "offer"
+msgstr "предложение"
+
+#: templates/offers/offer.html:174 templates/offers/offer.html:265
+#: templates/offers/offer.html:268
+#, fuzzy
+#| msgid "Problems"
+msgid "problem"
+msgstr "проблема"
+
+#: templates/offers/offer.html:220
+msgid "Mine"
+msgstr "Мой"
+
+#: templates/offers/offer.html:265
+msgid "Anonymous"
+msgstr "Анонимный"
+
+#: templates/offers/offer.html:307
+msgid "Previous"
+msgstr "Предыдущий"
+
+#: templates/offers/offer.html:308
+msgid "Next"
+msgstr "Следующий"
+
+#: templates/profile/profile.html:97
+msgid "Profile Picture"
+msgstr "Изображение профиля"
+
+#: templates/profile/profile.html:114
+msgid "Account Details"
+msgstr "Данные счета"
+
+#: templates/profile/profile.html:118
+msgid "Username (how your name will appear to other users on the site)"
 msgstr ""
+"Имя пользователя (как ваше имя будет отображаться для других пользователей "
+"сайта)"
+
+#: templates/profile/profile.html:119
+msgid "Enter your username"
+msgstr "Введите свое имя пользователя"
+
+#: templates/profile/profile.html:129
+msgid "Enter your first name"
+msgstr "Введите свое имя"
+
+#: templates/profile/profile.html:136
+msgid "Enter your last name"
+msgstr "Введите свою фамилию"
+
+#: templates/profile/profile.html:144
+msgid "Organization name"
+msgstr "Название организации"
+
+#: templates/profile/profile.html:146
+msgid "Enter your organization name"
+msgstr "Введите название вашей организации"
+
+#: templates/profile/profile.html:151 users/models.py:10
+msgid "Location"
+msgstr "Расположение"
+
+#: templates/profile/profile.html:153
+msgid "Enter your location"
+msgstr "Введите свое местоположение"
+
+#: templates/profile/profile.html:159
+#: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1915
+msgid "Email address"
+msgstr "Адрес электронной почты"
+
+#: templates/profile/profile.html:161
+msgid "Enter your email address"
+msgstr "Введите свой адрес электронной почты"
+
+#: templates/profile/profile.html:166
+msgid "Linkedin profile link"
+msgstr "Ссылка на профиль Linkedin"
+
+#: templates/profile/profile.html:168
+msgid "Enter your Linkedin profile link"
+msgstr "Введите ссылку на ваш профиль Linkedin"
+
+#: templates/profile/profile.html:174
+msgid "Save changes"
+msgstr "Сохранить изменения"
 
 #: users/models.py:9
 msgid "Organization Name"
-msgstr ""
-
-#: users/models.py:10
-msgid "Location"
-msgstr ""
+msgstr "Название организации"
 
 #: users/models.py:11
 msgid "Linkedin"
-msgstr ""
+msgstr "Линкедин"
 
 #: users/models.py:12 users/models.py:26
 msgid "Avatar"
-msgstr ""
+msgstr "Аватар"
 
 #: users/models.py:19
 msgid "Profiles"
@@ -188,11 +517,11 @@ msgstr ""
 msgid "Profession"
 msgstr ""
 
-#: users/models.py:32
+#: users/models.py:33
 msgid "Team Member"
 msgstr ""
 
-#: users/models.py:33
+#: users/models.py:34
 msgid "Team Members"
 msgstr ""
 
@@ -505,10 +834,6 @@ msgstr ""
 
 #: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1863
 msgid "Duration"
-msgstr ""
-
-#: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1915
-msgid "Email address"
 msgstr ""
 
 #: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1940
@@ -1423,3 +1748,18 @@ msgstr ""
 #: venv/lib/python3.10/site-packages/modeltranslation/widgets.py:32
 msgid "None"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Copyright © 2024, All Right Reserved Najot Ta'lim Feedback"
+#~ msgid "Copyright © 2024, All Right Reserved Najot Ta'lim"
+#~ msgstr ""
+#~ "Авторские права © 2024, Все права защищены Najot Ta'lim Обратная связь"
+
+#~ msgid "Terms"
+#~ msgstr "Условия"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "политика конфиденциальности"
+
+#~ msgid "Contact"
+#~ msgstr "Контакт"

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.translation import gettext_lazy as _  # Correct translation import
+from django.utils.translation import gettext_lazy as _
 from common.models import UsefulModel
 
 
@@ -10,6 +10,7 @@ class ProblemModel(UsefulModel):
     user = models.ForeignKey(User, related_name='problems', on_delete=models.SET_NULL, null=True, blank=True)
     is_pinned = models.BooleanField(verbose_name=_('Is pinned'), default=False)
     total_views = models.PositiveIntegerField(default=0)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -112,7 +113,7 @@ class LikeProblemModel(models.Model):
 
 class LikeCommentOfferModel(models.Model):
     user = models.ManyToManyField(User, related_name='like_comment_offer')
-    offer_commnet = models.OneToOneField(CommentOfferModel, related_name='likes', on_delete=models.CASCADE)
+    offer_comment = models.OneToOneField(CommentOfferModel, related_name='likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

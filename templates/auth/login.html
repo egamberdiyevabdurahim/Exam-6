@@ -1,6 +1,9 @@
 <!doctype html>
 {% load static %}
 {% load i18n %}
+{% load my_tags %}
+{% get_url request as my_url %}
+{% encode_url my_url as encoded_url %}
 <html lang="en">
 
 <head>
@@ -45,40 +48,45 @@
             </div>
             <div class="login-form">
                 <div class="col-lg-12 col-12 mx-auto">
-                    <form class="custom-form" action="{% url 'users:login' %}" method="post" role="form">
+                    <form class="custom-form" action="{% url 'users:login' url=redirect_url %}" method="post" role="form">
                         {% csrf_token %}
                         <div class="text-center mb-5">
                             <p class="mb-1" style="text-align: end">{% trans 'Welcome to' %} <h6 style="text-align: end"><b>Najot
                             Ta'lim {% trans 'Feedback' %}</b></h6></p>
                         </div>
                         <div>
-                            <p style="text-align: start"><b>Login</b></p>
+                            <p style="text-align: start"><b>{% trans 'Login' %}</b></p>
+                            {% if error is not None %}
+                            <div class="alert alert-danger" role="alert">
+                                <p>{{ error }}</p>
+                            </div>
+                            {% endif %}
                             <div class="input-group mb-3">
                                 <input type="text" name="username_or_email" id="username"
                                        class="form-control login-form-input"
                                        aria-label="username" aria-describedby="basic-addon1"
-                                       placeholder="{% trans 'Username or Email' %}" required>
+                                       placeholder="{% trans 'Username or Email' %}" required value="{{ form_data.username_or_email }}">
 
                                 <span class="input-group-text" id="basic-addon1">
-                                            <i class="custom-form-icon bi-person"></i>
-                                        </span>
+                                    <i class="custom-form-icon bi-person"></i>
+                                </span>
                             </div>
                             <div class="input-group mb-3">
-                                <input type="password" name="message_title" id="password"
+                                <input type="password" name="password" id="password"
                                        class="form-control login-form-input"
                                        aria-label="user_password" aria-describedby="basic-addon1"
-                                       placeholder="{% trans 'Password' %}" required>
+                                       placeholder="{% trans 'Password' %}" required value="{{ form_data.password }}">
 
                                 <span class="input-group-text" id="basic-addon">
-                                            <i class="custom-form-icon bi-person"></i>
-                                        </span>
+                                    <i class="custom-form-icon bi-person"></i>
+                                </span>
                             </div>
                             <div class="col-lg-8 col-md-10 col-8 mx-auto mb-2">
                                 <button type="submit" class="form-control" style="text-align: center">{% trans 'Login' %}</button>
                             </div>
                             <div style="padding-top: 10px; text-align: center;">
                                 <p style="font-size: 13px">{% trans 'Does your account not exist' %}? <a
-                                        href="{% url 'users:register' %}">{% trans 'Create account' %}</a>
+                                        href="{% url 'users:register' url=encoded_url %}">{% trans 'Create account' %}</a>
                                 </p>
                             </div>
                         </div>

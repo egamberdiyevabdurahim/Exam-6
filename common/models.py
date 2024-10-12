@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _  # Correct translation import
+from django.utils.translation import gettext_lazy as _
 
 
 class UsefulModel(models.Model):

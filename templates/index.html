@@ -2,6 +2,8 @@
 {% load static %}
 {% load i18n %}
 {% load my_tags %}
+{% get_url request as my_url %}
+{% encode_url my_url as encoded_url %}
 <html lang="uz">
 <head>
     <meta charset="utf-8">
@@ -42,13 +44,6 @@
                 <span>Najot Ta'lim</span>
             </a>
 
-            <div class="d-lg-none ms-auto me-3">
-                <a href="{% url 'users:login' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                    <i class="btn-icon bi-person"></i>
-                    <span>Log in</span>
-                </a>
-            </div>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -62,36 +57,50 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'post:create_problem' %}">{% trans 'Problems' %}</a>
+                        <a class="nav-link" href="{% url 'post:create_problem' %}">{% trans 'Problem' %}</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'post:create_offer' %}">{% trans 'Offers' %}</a>
+                        <a class="nav-link" href="{% url 'post:create_offer' %}">{% trans 'Offer' %}</a>
                     </li>
 
                     <li class="nav-item">
-                        {% get_available_languages as all_langs %}
-                        {% get_current_lang request as current_lang %}
-
-                        {% for lang in all_langs %}
-                            {% if lang.0 != current_lang %}
-                                <a href="{% get_full_url request lang %}">
-                                    <hr>
-                                    {{ lang.1 }}
-                                </a>
+                        <a class="nav-link" href="{% url 'post:offer_problem' %}">{% trans 'Offers&Problems' %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <select class="form-select language-select" aria-label="Select language" onchange="location=this.value">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for lang in languages %}
+                            {% if lang.code != LANGUAGE_CODE %}
+                            <option value="{% get_full_url request lang.code %}">
+                                {{ lang.name_local }}
+                            </option>
+                            {% else %}
+                            <option value="{% get_full_url request lang.code %}" disabled selected>
+                                {{ lang.name_local }}
+                            </option>
                             {% endif %}
-                        {% endfor %}
+                            {% endfor %}
+                        </select>
                     </li>
-
-
                 </ul>
 
                 <div class="d-none d-lg-block">
-                    <a href="{% url 'users:login' %}"
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'users:logout' url=encoded_url %}"
                        class="btn custom-btn custom-border-btn btn-naira btn-inverted">
                         <i class="btn-icon bi-person"></i>
-                        <span>Log in</span>
+                        <span>{% trans 'Log out' %}</span>
                     </a>
+                    {% else %}
+                    <a href="{% url 'users:login' url=encoded_url %}"
+                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                        <i class="btn-icon bi-person"></i>
+                        <span>{% trans 'Log in' %}</span>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -107,9 +116,9 @@
 
                     <h1 class="text-white mb-4">{% trans 'Online platform for requests and offers' %}</h1>
 
-                    <a href="main/forms/offer/offer-form.html" class="btn custom-btn smoothscroll me-3">{% trans 'Problems' %}</a>
+                    <a href="{% url 'post:create_problem' %}" class="btn custom-btn smoothscroll me-3">{% trans 'Problems' %}</a>
 
-                    <a href="main/auth/login/login.html" class="link link--kale smoothscroll">{% trans 'Make an offer' %}</a>
+                    <a href="{% url 'post:create_offer' %}" class="link link--kale smoothscroll">{% trans 'Make an offer' %}</a>
                 </div>
                 <div class="hero-image-wrap col-lg-6 col-12 mt-3 mt-lg-0">
                     <dotlottie-player src="https://lottie.host/ef67cee9-3f8a-4da2-945f-ab8a83e541b0/QZXEjRpNmf.json"
@@ -140,15 +149,9 @@
                         <h6>{% trans 'Brief information about the site' %}</h6>
 
 
-                        <h2 class="mb-4">Najot Ta'lim Feedback</h2>
+                        <h2 class="mb-4">{{ about.title }}</h2>
 
-                        <p>The Najot Ta'lim Feedback Site is designed to collect and analyze feedback on services,
-                            classes, and overall experiences at the Najot Ta'lim educational center. The site allows
-                            students and their parents to identify strengths and areas for improvement at the center.
-                            Feedback is gathered through an online form, enhancing transparency and openness. The
-                            collected feedback is used to improve services and introduce new opportunities. The site
-                            also showcases the center’s achievements and successes, providing inspiration and
-                            strengthening its image.</p>
+                        <p>{{ about.description }}</p>
                     </div>
                 </div>
 
@@ -170,20 +173,9 @@
                 <div class="col-lg-4 col-12">
                     <nav id="navbar-example3" class="h-100 flex-column align-items-stretch">
                         <nav class="nav nav-pills flex-column">
-                            <a class="nav-link smoothscroll" href="#item-1"><strong>Question 1: </strong> How can I
-                                submit feedback?</a>
-
-                            <a class="nav-link smoothscroll" href="#item-2"><strong>Question 2: </strong>
-                                How is feedback processed and what results are published?</a>
-
-                            <a class="nav-link smoothscroll" href="#item-3"><strong>Question 3: </strong>Is my feedback
-                                anonymous?</a>
-
-                            <a class="nav-link smoothscroll" href="#item-4"><strong>Question 4: </strong>Can I
-                                participate in discussions on the site?</a>
-
-                            <a class="nav-link smoothscroll" href="#item-5"><strong>Question 5: </strong>What topics can
-                                be discussed in the forums?</a>
+                            {% for question in questions %}
+                            <a class="nav-link smoothscroll" href="#item-{{ forloop.counter }}"><strong>{% trans 'Question' %} {{ forloop.counter }}: </strong>{{ question.question }}</a>
+                            {% endfor %}
                         </nav>
                     </nav>
                 </div>
@@ -191,50 +183,12 @@
                 <div class="col-lg-8 col-12">
                     <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true"
                          class="scrollspy-example-2" tabindex="0">
-                        <div class="scrollspy-example-item" id="item-1">
-                            <h5>1. Question: How can I submit feedback?</h5>
-
-                            <p>You can submit feedback using the online form available on our site. Simply fill out the
-                                required sections and submit your comments. Anonymity is an option if you prefer.</p>
-
+                        {% for question in questions %}
+                        <div class="scrollspy-example-item" id="item-{{ forloop.counter }}">
+                            <h5>{{ forloop.counter }}. {% trans 'Question' %}: {{ question.question }}</h5>
+                            <p>{{ question.answer }}</p>
                         </div>
-
-                        <div class="scrollspy-example-item" id="item-2">
-                            <h5>2. Question: How is feedback processed and what results are published?</h5>
-
-                            <p> Feedback is regularly analyzed. Monthly or quarterly reports summarizing general trends
-                                and improvements are published on our site. Individual feedback responses are not
-                                provided, but general responses and discussion outcomes are shared.</p>
-
-                        </div>
-
-                        <div class="scrollspy-example-item" id="item-3">
-                            <h5>3. Question: Is my feedback anonymous?</h5>
-
-                            <p>
-                                Yes, you can submit feedback anonymously. Your personal information will not be
-                                disclosed, but your feedback will be used for general analysis.
-                            </p>
-                        </div>
-
-                        <div class="scrollspy-example-item" id="item-4">
-                            <h5>4. Question: Can I participate in discussions on the site?</h5>
-
-                            <p>
-                                Yes, the site includes a discussion forum where you can engage with other users. You can
-                                exchange opinions, discuss feedback, and participate in conversations on various topics.
-                            </p>
-                        </div>
-
-                        <div class="scrollspy-example-item" id="item-5">
-                            <h5>5. Question: What topics can be discussed in the forums?</h5>
-
-                            <p>
-                                The forums cover topics such as services, educational processes, teachers, classes, and
-                                other aspects of the educational center’s activities. You can share your opinions and
-                                engage in discussions with other users on these topics.
-                            </p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -244,7 +198,7 @@
 
     <section class="author-section section-padding" id="section_3">
         <div class="col-lg-12 col-12 text-center">
-            <h6>Team</h6>
+            <h6>{% trans 'Team' %}</h6>
 
             <h2 class="mb-5">{% trans 'About the participants in the team' %}</h2>
         </div>
@@ -270,7 +224,6 @@
                                     {{ team.description }}
                                 </p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -302,50 +255,133 @@
                     <div class="carousel-inner" style="padding: 0 20px">
                         <div class="carousel-item active">
                             <div class="card-wrapper container-sm d-flex  justify-content-around">
-                                {% for offer in offers %}
+                                {% for offer in three_offers %}
                                 <div class="col-lg-4 col-12 p-3">
                                     <div class="custom-block d-flex flex-wrap">
                                         <div class="custom-block-image-wrap d-flex flex-column">
-                                            <img src="{{ offer.user.profile.avatar.url }}"
-                                                 class="img-fluid avatar-image" alt="">
+                                            <a href="{% url 'users:profile' pk=offer.user.pk %}" class="btn"><img src="{{ offer.user.profile.avatar.url }}"
+                                                                                                      class="img-fluid avatar-image" alt=""></a>
 
                                             <div class="text-center mt-3">
-                                                <span class="text-white">{{ offer.user.get_full_name }}</span>
+                                                <a href="{% url 'users:profile' pk=offer.user.pk %}">
+                                                    <span class="text-white">{{ offer.user.get_full_name }}</span></a>
 
                                             </div>
                                         </div>
 
                                         <div class="custom-block-info">
                                             <div class="reviews-group mb-3">
-                                                <strong>4.5</strong>
-
-                                                <i class="bi-star-fill"></i>
-                                                <i class="bi-star-fill"></i>
-                                                <i class="bi-star-fill"></i>
-                                                <i class="bi-star-fill"></i>
-                                                <i class="bi-star"></i>
+                                                <form method="post" action="{% if offer.ip_address is None %}{% url 'post:like_offer' pk=offer.pk %}{% else %}{% url 'post:like_problem' pk=offer.pk %}{% endif %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="before" value="{{ my_url }}">
+                                                    <div class="action-icons">
+                                                        {% if request.user.is_authenticated %}
+                                                        {% if request.user in offer.likes.user.all %}
+                                                            <button type="submit" class="btn action-item">
+                                                                <i class="bi bi-heart-fill text-danger">{{ offer.total_likes }}</i>
+                                                            </button>
+                                                        {% else %}
+                                                            <button type="submit" class="btn action-item">
+                                                                <i class="bi bi-heart text-danger">{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</i>
+                                                            </button>
+                                                        {% endif %}
+                                                        {% else %}
+                                                        <i class="bi bi-heart text-danger">{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</i>
+                                                        {% endif %}
+                                                        <i class="bi bi-eye-fill text-info">{{ offer.total_views }}</i>
+                                                        <i class="bi bi-chat-dots-fill text-warning">{{ offer.total_comments }}</i>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <h5 id="offer-title" class="danger">{{ offer.title | truncatewords:4 }}</h5>
+                                            <h5 id="offer-title1" class="text-light">
+                                                <a href='{% url "post:offer_detail" pk=offer.pk url=encoded_url %}' class="navbar-brand">
+                                                    {{ offer.title | truncatechars:70 }}
+                                                </a>
+                                            </h5>
                                             <p class="mb-0">{{ offer.description | truncatechars:200 }}</p>
                                         </div>
                                     </div>
                                 </div>
                                 {% endfor %}
 
-                        <button class="carousel-control-prev carousel-btn" type="button"
-                                data-bs-target="#carouselExampleControls"
-                                data-bs-slide="prev">
-                            <span class="bi bi-caret-left-fill "></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                                data-bs-slide="next"
-                                style="text-align: end; width: 45px; position: absolute; right: 0; border-radius: 8px">
-                            <span style="color: #f4a261; font-size: 25px" class="bi bi-caret-right-fill"></span>
-                        </button>
+                                <button class="carousel-control-prev carousel-btn" type="button"
+                                        data-bs-target="#carouselExampleControls"
+                                        data-bs-slide="prev">
+                                    <span class="bi bi-caret-left-fill "></span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleControls"
+                                        data-bs-slide="next"
+                                        style="text-align: end; width: 45px; position: absolute; right: 0; border-radius: 8px">
+                                    <span style="color: #f4a261; font-size: 25px" class="bi bi-caret-right-fill"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <div class="card-wrapper container-sm d-flex  justify-content-around">
+                                {% for offer in offers %}
+                                <div class="col-lg-4 col-12 p-3">
+                                    <div class="custom-block d-flex flex-wrap">
+                                        <div class="custom-block-image-wrap d-flex flex-column">
+                                            <a href="{% url 'users:profile' pk=offer.user.pk %}" class="btn"><img src="{{ offer.user.profile.avatar.url }}"
+                                                                                                      class="img-fluid avatar-image" alt=""></a>
+
+                                            <div class="text-center mt-3">
+                                                <a href="{% url 'users:profile' pk=offer.user.pk %}">
+                                                    <span class="text-white">{{ offer.user.get_full_name }}</span></a>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="custom-block-info">
+                                            <div class="reviews-group mb-3">
+                                                <form method="post" action="{% if offer.ip_address is None %}{% url 'post:like_offer' pk=offer.pk %}{% else %}{% url 'post:like_problem' pk=offer.pk %}{% endif %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="before" value="{{ my_url }}">
+                                                    <div class="action-icons">
+                                                        {% if request.user.is_authenticated %}
+                                                        {% if request.user in offer.likes.user.all %}
+                                                            <button type="submit" class="btn action-item">
+                                                                <i class="bi bi-heart-fill text-danger">{{ offer.total_likes }}</i>
+                                                            </button>
+                                                        {% else %}
+                                                            <button type="submit" class="btn action-item">
+                                                                <i class="bi bi-heart text-danger">{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</i>
+                                                            </button>
+                                                        {% endif %}
+                                                        {% else %}
+                                                        <i class="bi bi-heart text-danger">{% if offer.total_likes > 0 %}{{ offer.total_likes }}{% else %}0{% endif %}</i>
+                                                        {% endif %}
+                                                        <i class="bi bi-eye-fill text-info">{{ offer.total_views }}</i>
+                                                        <i class="bi bi-chat-dots-fill text-warning">{{ offer.total_comments }}</i>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <h5 id="offer-title2" class="text-light"><a href='{% url "post:offer_detail" pk=offer.pk url=encoded_url %}' class="navbar-brand">{{ offer.title | truncatechars:70 }}</a></h5>
+                                            <p class="mb-0">{{ offer.description | truncatechars:200 }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                <button class="carousel-control-prev carousel-btn" type="button"
+                                        data-bs-target="#carouselExampleControls"
+                                        data-bs-slide="prev">
+                                    <span class="bi bi-caret-left-fill "></span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleControls"
+                                        data-bs-slide="next"
+                                        style="text-align: end; width: 45px; position: absolute; right: 0; border-radius: 8px">
+                                    <span style="color: #f4a261; font-size: 25px" class="bi bi-caret-right-fill"></span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                </div>
             </div>
-        </div>
     </section>
     <!--    Footer   -->
     <!--footer-->
@@ -362,15 +398,6 @@
                         <ul>
                             <li>
                                 <a href="{% url 'common:home' %}">{% trans 'Home' %}</a>
-                            </li>
-                            <li>
-                                <a href="#">{% trans 'Terms' %}</a>
-                            </li>
-                            <li>
-                                <a href="#">{% trans 'Privacy Policy' %}</a>
-                            </li>
-                            <li>
-                                <a href="#">{% trans 'Contact' %}</a>
                             </li>
                         </ul>
                     </div>

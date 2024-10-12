@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
-from django.utils.translation import gettext_lazy as _  # Correct translation import
+from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from common.models import UsefulModel
 
 

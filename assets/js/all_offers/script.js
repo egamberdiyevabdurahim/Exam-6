@@ -7,12 +7,14 @@ function renderCards() {
     const demandCards = document.querySelectorAll('.demand');
     const myOfferCards = document.querySelectorAll('.my-offers');
     const myWrittenOffers = document.querySelectorAll('.my-written-offers');
+    const myProblemsCards=document.querySelectorAll('.my-problems');
 
     // Hide all cards
     offerCards.forEach(card => card.style.display = 'none');
     demandCards.forEach(card => card.style.display = 'none');
     myOfferCards.forEach(card => card.style.display = 'none');
     myWrittenOffers.forEach(card => card.style.display = 'none');
+    myProblemsCards.forEach(card=>card.style.display='none');
 
     // Calculate indices
     let startIndex = (currentPage - 1) * cardsPerPage;
@@ -35,6 +37,11 @@ function renderCards() {
         totalCards = myWrittenOffers.length;
         for (let i = startIndex; i < endIndex && i < myWrittenOffers.length; i++) {
             myWrittenOffers[i].style.display = 'block';
+        }
+    }else if(currentData==='my_problems'){
+        totalCards=myProblemsCards.length;
+        for (let i = startIndex; i < endIndex && i < myProblemsCards.length; i++) {
+            myProblemsCards[i].style.display = 'block';
         }
     } else { // Assuming default to 'demands'
         totalCards = demandCards.length;

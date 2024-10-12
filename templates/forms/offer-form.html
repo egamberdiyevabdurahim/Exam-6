@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
+{% load my_tags %}
+{% get_url request as my_url %}
+{% encode_url my_url as encoded_url %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Najot Ta'lim | Offer Form</title>
+    <title>Najot Ta'lim | {% trans 'Offer Form' %}</title>
 
     <!-- Stylesheets   -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -36,39 +40,110 @@
                               autoplay></dotlottie-player>
         </div>
         <div class="col-md-6">
+            {% get_offer_or_problem request as which %}
             <div class="btn-group mb-3" role="group">
-                <button type="button" class="btn btn-secondary" id="signInBtn">Offers</button>
-                <button type="button" class="btn btn-secondary active" id="signUpBtn">Problems</button>
+                {% if which == 'Problem' %}
+                <button type="button" class="btn btn-secondary" id="signInBtn1">{% trans 'Offers' %}</button>
+                <button type="button" class="btn btn-secondary active" id="signUpBtn2">{% trans 'Problems' %}</button>
+                {% else %}
+                <button type="button" class="btn btn-secondary active" id="signInBtn">{% trans 'Offers' %}</button>
+                <button type="button" class="btn btn-secondary" id="signUpBtn">{% trans 'Problems' %}</button>
+                {% endif %}
             </div>
-            <a href="{% url 'common:home' %}" type="button" class="btn btn-secondary back-home">Home</a>
-            <form id="signUpForm" method="post" action="{% url 'post:create_problem' %}">
+            <a href="{% url 'common:home' %}" type="button" class="btn btn-secondary back-home">{% trans 'Home' %}</a>
+            {% if which == 'Problem' %}
+            <form id="signUpForm1" method="post" action="{% url 'post:create_problem' %}">
                 {% csrf_token %}
-                <h4 class="form-title">Submit a problem</h4>
+                <h4 class="form-title">{% trans 'Submit a problem' %}</h4>
+                {% if errors is not None %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <div class="form-group mt-4">
-                    <label for="problemTitle">Title</label>
-                    <input type="text" class="form-control" id="problemTitle" placeholder="Enter problem title" name="title">
+                    <label for="problemTitle">{% trans 'Title' %}</label>
+                    <input type="text" class="form-control" id="problemTitle2" placeholder="{% trans 'Enter problem title' %}" name="title" value="{{ form_data.title }}">
                 </div>
                 <div class="form-group">
-                    <label for="problemDescription">Description</label>
-                    <textarea class="form-control" id="problemDescription"
-                              placeholder="Enter problem description" maxlength="2000" name="description"></textarea>
+                    <label for="problemDescription">{% trans 'Description' %}</label>
+                    <textarea class="form-control" id="problemDescription1"
+                              placeholder="{% trans 'Enter problem description' %}" maxlength="2000" name="description">{{ form_data.description }}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                {% if request.user.is_authenticated %}
+                <div class="form-check form-switch">
+                    <input name="anonymous" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">{% trans 'Send Anonymous' %}</label>
+                </div>
+                {% endif %}
+                <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
             </form>
-            <form id="signInForm" style="display: none;" method="post" action="{% url 'post:create_offer' %}">
+            <form id="signInForm1" style="display: none;" method="post" action="{% url 'post:create_offer' %}">
+                {% if user.is_authenticated %}
                 {% csrf_token %}
-                <h4 class="form-title">Submit a offer</h4>
+                <h4 class="form-title">{% trans 'Submit a offer' %}</h4>
                 <div class="form-group mt-4">
                     <label for="offerTitle">Title</label>
-                    <input type="text" class="form-control" id="offerTitle" placeholder="Enter offer title" name="title">
+                    <input type="text" class="form-control" id="offerTitle1" placeholder="{% trans 'Enter offer title' %}" name="title" value="{{ form_data.title }}">
                 </div>
                 <div class="form-group">
-                    <label for="offerDescription">Description</label>
-                    <textarea class="form-control" id="offerDescription"
-                              placeholder="Enter offer description" maxlength="2000" name="description"></textarea>
+                    <label for="offerDescription">{% trans 'Description' %}</label>
+                    <textarea class="form-control" id="offerDescription1"
+                              placeholder="{% trans 'Enter offer description' %}" maxlength="2000" name="description">{{ form_data.description }}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+                {% else %}
+                <a href="{% url 'users:login' url=encoded_url %}"><h4 class="form-title">{% trans 'Log in to write Offer' %}</h4></a>
+                {% endif %}
             </form>
+            {% else %}
+            <form id="signUpForm" style="display: none;" method="post" action="{% url 'post:create_problem' %}">
+                {% csrf_token %}
+                <h4 class="form-title">{% trans 'Submit a problem' %}</h4>
+                {% if errors is not None %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="form-group mt-4">
+                    <label for="problemTitle">{% trans 'Title' %}</label>
+                    <input type="text" class="form-control" id="problemTitle" placeholder="{% trans 'Enter problem title' %}" name="title" value="{{ form_data.title }}">
+                </div>
+                <div class="form-group">
+                    <label for="problemDescription">{% trans 'Description' %}</label>
+                    <textarea class="form-control" id="problemDescription"
+                              placeholder="{% trans 'Enter problem description' %}" maxlength="2000" name="description">{{ form_data.description }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+            </form>
+            <form id="signInForm" method="post" action="{% url 'post:create_offer' %}">
+                {% if user.is_authenticated %}
+                {% csrf_token %}
+                <h4 class="form-title">{% trans 'Submit a offer' %}</h4>{% if errors is not None %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="form-group mt-4">
+                    <label for="offerTitle1">{% trans 'Title' %}</label>
+                    <input type="text" class="form-control" id="offerTitle" placeholder="{% trans 'Enter offer title' %}" name="title" value="{{ form_data.title }}">
+                </div>
+                <div class="form-group">
+                    <label for="offerDescription1">{% trans 'Description' %}</label>
+                    <textarea class="form-control" id="offerDescription"
+                              placeholder="{% trans 'Enter offer description' %}" maxlength="2000" name="description">{{ form_data.description }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
+                {% else %}
+                <a href="{% url 'users:login' url=encoded_url %}"><h4 class="form-title">{% trans 'Log in to write Offer' %}</h4></a>
+                {% endif %}
+            </form>
+            {% endif %}
         </div>
     </div>
 </div>

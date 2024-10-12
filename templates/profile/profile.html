@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
+{% load my_tags %}
+{% get_url request as my_url %}
+{% encode_url my_url as encoded_url %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Najot Talim | Profile</title>
+    <title>Najot Talim | {% trans 'Profile' %}</title>
 
     <!-- Stylesheets   -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,33 +16,26 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <link href="../../{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
 
-    <link href="../../{% static 'css/bootstrap/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/bootstrap-icons.css' %}" rel="stylesheet">
 
-    <link href="../../{% static 'css/bootstrap/templatemo-ebook-landing.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/templatemo-ebook-landing.css' %}" rel="stylesheet">
 
-    <link rel="icon" href="../../{% static 'files/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'files/images/favicon.ico' %}" type="image/x-icon">
 
-    <link rel="stylesheet" href="../../{% static 'css/carusel/carusel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carusel/carusel.css' %}">
 
-    <link rel="stylesheet" href="../../{% static 'css/profile/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile/style.css' %}">
 </head>
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="../../index.html">
-            <i><img src="../../{% static 'files/images/logo.png' %}" alt="404" style="width: 60px;"></i>
+        <a class="navbar-brand" href="{% url 'common:home' %}">
+            <i><img src="{% static 'files/images/logo.png' %}" alt="404" style="width: 60px;"></i>
             <span>Najot Ta'lim</span>
         </a>
-
-        <div class="d-lg-none ms-auto me-3">
-            <a href="main/auth/login/login.html" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                <i class="btn-icon bi-person"></i>
-                <span>Log in</span>
-            </a>
-        </div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,124 +45,140 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-lg-auto me-lg-4">
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_1">Home</a>
+                    <a class="nav-link click-scroll" href="{% url 'common:home' %}">{% trans 'Home' %}</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_2">The Site</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_3">Team</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_4">Appeals</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="main/offers/offer.html">Comments</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="main/404/404.html">404</a>
+                    <select class="form-select language-select" aria-label="Select language" onchange="location=this.value">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for lang in languages %}
+                        {% if lang.code != LANGUAGE_CODE %}
+                        <option value="{% get_full_url request lang.code %}">
+                            {{ lang.name_local }}
+                        </option>
+                        {% else %}
+                        <option value="{% get_full_url request lang.code %}" disabled selected>
+                            {{ lang.name_local }}
+                        </option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
                 </li>
             </ul>
-
             <div class="d-none d-lg-block">
-                <a href="main/auth/login/login.html"
-                   class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                    <i class="btn-icon bi-person"></i>
-                    <span>Log in</span>
-                </a>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'users:logout' url=encoded_url %}"
+                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                        <i class="btn-icon bi-person"></i>
+                        <span>{% trans 'Log out' %}</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'users:login' url=encoded_url %}"
+                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                        <i class="btn-icon bi-person"></i>
+                        <span>{% trans 'Log in' %}</span>
+                    </a>
+                    {% endif %}
             </div>
         </div>
     </div>
 </nav>
 
 <!-- Profile page content-->
-<div class="container-xl px-4 mt-4">
-    <div class="row">
-        <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
-                <div class="card-header">Profile Picture</div>
-                <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2"
-                         src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button class="btn" type="button">Upload new image</button>
-                </div>
-            </div>
+<form method="post" action="{% url 'users:edit_profile' pk=user.pk %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container-xl px-4 mt-4">
+        <div class="row">
+            <div class="col-xl-4">
+                    <!-- Profile picture card-->
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">{% trans 'Profile Picture' %}</div>
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img class="img-account-profile rounded-circle mb-2"
+                                 src="{{ user.profile.avatar.url }}" alt="">
+                            <!-- Profile picture help block-->
+                            <div class="small font-italic text-muted mb-4"></div>
+                            <!-- Profile picture upload button-->
+                            {% if user.username == request.user.username %}
+                            <input type="file" class="btn" name="avatar" style="width: 120px">
+                            {% endif %}
+                        </div>
+                    </div>
         </div>
-        <div class="col-xl-8">
+            <div class="col-xl-8">
             <!-- Account details card-->
             <div class="card mb-4">
-                <div class="card-header">Account Details</div>
+                <div class="card-header">{% trans 'Account Details' %}</div>
                 <div class="card-body">
-                    <form>
-                        <!-- Form Group (username)-->
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other
-                                users on the site)</label>
-                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username"
-                                   value="username">
+                    <!-- Form Group (username)-->
+                    <div class="mb-3">
+                        <label class="small mb-1" for="inputUsername">{% trans 'Username (how your name will appear to other users on the site)' %}</label>
+                        <input class="form-control" id="inputUsername" type="text" placeholder="{% trans 'Enter your username' %}"
+                               value="{{ user.username }}" name="username"
+                               {% if user.username != request.user.username %} disabled{% endif %}>
+                    </div>
+                    <!-- Form Row-->
+                    <div class="row gx-3 mb-3">
+                        <!-- Form Group (first name)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputFirstName">{% trans 'First name' %}</label>
+                            <input class="form-control" id="inputFirstName" type="text"
+                                   placeholder="{% trans 'Enter your first name' %}" value="{{ user.first_name }}" name="first_name"
+                            {% if user.username != request.user.username %} disabled{% endif %}>
                         </div>
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                <input class="form-control" id="inputFirstName" type="text"
-                                       placeholder="Enter your first name" value="Valerie">
-                            </div>
-                            <!-- Form Group (last name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputLastName">Last name</label>
-                                <input class="form-control" id="inputLastName" type="text"
-                                       placeholder="Enter your last name" value="Luna">
-                            </div>
+                        <!-- Form Group (last name)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputLastName">{% trans 'Last name' %}</label>
+                            <input class="form-control" id="inputLastName" type="text"
+                                   placeholder="{% trans 'Enter your last name' %}" value="{{ user.last_name }}" name="last_name"
+                            {% if user.username != request.user.username %} disabled{% endif %}>
                         </div>
-                        <!-- Form Row        -->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (organization name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputOrgName">Organization name</label>
-                                <input class="form-control" id="inputOrgName" type="text"
-                                       placeholder="Enter your organization name" value="Start Bootstrap">
-                            </div>
-                            <!-- Form Group (location)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputLocation">Location</label>
-                                <input class="form-control" id="inputLocation" type="text"
-                                       placeholder="Enter your location" value="San Francisco, CA">
-                            </div>
+                    </div>
+                    <!-- Form Row        -->
+                    <div class="row gx-3 mb-3">
+                        <!-- Form Group (organization name)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputOrgName">{% trans 'Organization name' %}</label>
+                            <input class="form-control" id="inputOrgName" type="text"
+                                   placeholder="{% trans 'Enter your organization name' %}" value="{{ user.profile.organization_name }}" name="organization_name"
+                            {% if user.username != request.user.username %} disabled{% endif %}>
                         </div>
-                        <!-- Form Group (email address)-->
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                            <input class="form-control" id="inputEmailAddress" type="email"
-                                   placeholder="Enter your email address" value="name@example.com" readonly
-                                   style="cursor: not-allowed;">
+                        <!-- Form Group (location)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputLocation">{% trans 'Location' %}</label>
+                            <input class="form-control" id="inputLocation" type="text"
+                                   placeholder="{% trans 'Enter your location' %}" value="{{ user.profile.location }}" name="location"
+                            {% if user.username != request.user.username %} disabled{% endif %}>
                         </div>
-                        <!-- Linkedin profile link-->
-                        <div class="mb-3">
-                            <label class="small mb-1" for="linkedinProfileLink">Linkedin profile link</label>
-                            <input class="form-control" id="linkedinProfileLink" type="email"
-                                   placeholder="Enter your Linkedin profile link"
-                                   value="https://www.linkedin.com/in/valerie-luna-123456789">
-                        </div>
-                        <!-- Save changes button-->
-                        <button class="btn" type="button">Save changes</button>
-                    </form>
+                    </div>
+                    <!-- Form Group (email address)-->
+                    <div class="mb-3">
+                        <label class="small mb-1" for="inputEmailAddress">{% trans 'Email address' %}</label>
+                        <input class="form-control" id="inputEmailAddress" type="email"
+                               placeholder="{% trans 'Enter your email address' %}" value="{{ user.email }}" readonly
+                               style="cursor: not-allowed;" {% if user.username != request.user.username %} disabled{% endif %}>
+                    </div>
+                    <!-- Linkedin profile link-->
+                    <div class="mb-3">
+                        <label class="small mb-1" for="linkedinProfileLink">{% trans 'Linkedin profile link' %}</label>
+                        <input class="form-control" id="linkedinProfileLink" type="text"
+                               placeholder="{% trans 'Enter your Linkedin profile link' %}"
+                               value="{{ user.profile.linkedin_link }}" name="linkedin_link"
+                        {% if user.username != request.user.username %} disabled{% endif %}>
+                    </div>
+                    <!-- Save changes button-->
+                    {% if user.username == request.user.username %}
+                    <button class="btn" type="submit">{% trans 'Save changes' %}</button>
+                    {% endif %}
                 </div>
             </div>
         </div>
+        </div>
     </div>
-</div>
+</form>
 
 <!--Script-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

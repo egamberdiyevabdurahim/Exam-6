@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-08 21:22+0000\n"
+"POT-Creation-Date: 2024-10-12 21:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,8 @@ msgstr "Tavsif haqida"
 msgid "About Us"
 msgstr "Biz haqimizda"
 
-#: common/models.py:26 common/models.py:33
+#: common/models.py:26 common/models.py:33 templates/index.html:177
+#: templates/index.html:188
 msgid "Question"
 msgstr "Savol"
 
@@ -42,125 +43,475 @@ msgstr "Javob"
 msgid "Questions"
 msgstr "Savollar"
 
-#: post/models.py:8 post/models.py:22
+#: post/models.py:8 post/models.py:32 templates/forms/offer-form.html:59
+#: templates/forms/offer-form.html:98 templates/forms/offer-form.html:113
 msgid "Title"
 msgstr "Sarlavha"
 
-#: post/models.py:9 post/models.py:23
+#: post/models.py:9 post/models.py:33 templates/forms/offer-form.html:63
+#: templates/forms/offer-form.html:84 templates/forms/offer-form.html:102
+#: templates/forms/offer-form.html:117 users/models.py:27
 msgid "Description"
 msgstr "Tavsif"
 
-#: post/models.py:11 post/models.py:25
+#: post/models.py:11 post/models.py:35
 msgid "Is pinned"
 msgstr "Qadalganmi"
 
-#: post/models.py:17
+#: post/models.py:19 templates/index.html:60
 msgid "Problem"
 msgstr "Muammo"
 
-#: post/models.py:18 templates/index.html:64 templates/index.html:109
+#: post/models.py:20 templates/forms/offer-form.html:47
+#: templates/forms/offer-form.html:50 templates/index.html:119
 msgid "Problems"
 msgstr "Muammolar"
 
-#: post/models.py:31
+#: post/models.py:42 templates/index.html:64
 msgid "Offer"
 msgstr "Taklif"
 
-#: post/models.py:32 templates/index.html:68
+#: post/models.py:43 templates/forms/offer-form.html:46
+#: templates/forms/offer-form.html:49 templates/offers/offer.html:10
+#: templates/offers/offer.html:119
 msgid "Offers"
 msgstr "Takliflar"
 
-#: post/models.py:36 post/models.py:49
+#: post/models.py:55 post/models.py:72 templates/comments/comment.html:12
 msgid "Comment"
 msgstr "Izoh"
 
-#: post/models.py:44
+#: post/models.py:63
 msgid "Comment on Problem"
 msgstr "Muammo haqida fikr"
 
-#: post/models.py:45
+#: post/models.py:64
 msgid "Comments on Problem"
 msgstr "Muammo haqida fikrlar"
 
-#: post/models.py:57
+#: post/models.py:80
 msgid "Comment on Offer"
 msgstr "Taklif haqida fikr"
 
-#: post/models.py:58
+#: post/models.py:81
 msgid "Comments on Offer"
 msgstr "Taklif haqida fikr"
 
-#: templates/index.html:12
+#: post/models.py:97
+#, fuzzy
+#| msgid "Offer"
+msgid "Like Offer"
+msgstr "Taklif"
+
+#: post/models.py:98
+#, fuzzy
+#| msgid "Offers"
+msgid "Like Offers"
+msgstr "Takliflar"
+
+#: post/models.py:110
+#, fuzzy
+#| msgid "Problem"
+msgid "Like Problem"
+msgstr "Muammo"
+
+#: post/models.py:111
+#, fuzzy
+#| msgid "Problems"
+msgid "Like Problems"
+msgstr "Muammolar"
+
+#: post/models.py:123
+msgid "Like Offer Comment"
+msgstr ""
+
+#: post/models.py:124
+msgid "Like Offer Comments"
+msgstr ""
+
+#: post/models.py:136
+msgid "Like Problem Comment"
+msgstr ""
+
+#: post/models.py:137
+msgid "Like Problem Comments"
+msgstr ""
+
+#: templates/auth/login.html:12 templates/auth/register.html:10
+#: templates/index.html:15
 msgid "Feedback site"
 msgstr "Fikr-mulohaza sayti"
 
-#: templates/index.html:60 templates/index.html:715
+#: templates/auth/login.html:40 templates/auth/login.html:55
+#: templates/auth/register.html:40 templates/auth/register.html:57
+#, fuzzy
+#| msgid "Feedback site"
+msgid "Feedback"
+msgstr "Fikr-mulohaza sayti"
+
+#: templates/auth/login.html:54 templates/auth/register.html:56
+msgid "Welcome to"
+msgstr "Xush kelibsiz"
+
+#: templates/auth/login.html:58 templates/auth/login.html:80
+msgid "Login"
+msgstr "Tizimga kirish"
+
+#: templates/auth/login.html:63
+msgid "Username or Email"
+msgstr "Foydalanuvchi nomi yoki elektron pochta"
+
+#: templates/auth/login.html:73 templates/auth/register.html:105
+msgid "Password"
+msgstr "Parol"
+
+#: templates/auth/login.html:83
+msgid "Does your account not exist"
+msgstr "Sizning hisobingiz mavjud emasmi"
+
+#: templates/auth/login.html:84
+msgid "Create account"
+msgstr "Hisob yaratish"
+
+#: templates/auth/register.html:10 templates/auth/register.html:60
+#: templates/auth/register.html:123
+msgid "Register"
+msgstr "Roʻyxatdan oʻtish"
+
+#: templates/auth/register.html:65 templates/profile/profile.html:127
+#, fuzzy
+#| msgid "First Name"
+msgid "First name"
+msgstr "Ism"
+
+#: templates/auth/register.html:75 templates/profile/profile.html:134
+#, fuzzy
+#| msgid "Last Name"
+msgid "Last name"
+msgstr "Familiya"
+
+#: templates/auth/register.html:85
+msgid "Username"
+msgstr "Foydalanuvchi nomi"
+
+#: templates/auth/register.html:95
+msgid "Email"
+msgstr "Elektron pochta"
+
+#: templates/auth/register.html:115
+msgid "Confirm Password"
+msgstr "Parolni tasdiqlang"
+
+#: templates/auth/register.html:126
+msgid "Do you have an account"
+msgstr "Hisobingiz bormi"
+
+#: templates/auth/register.html:126 templates/index.html:101
+#: templates/offers/offer.html:85 templates/profile/profile.html:81
+msgid "Log in"
+msgstr "Tizimga kirish"
+
+#: templates/auth/verify_email.html:11 templates/auth/verify_email.html:13
+msgid "Confirm Email"
+msgstr "E-pochta manzilini tasdiqlash"
+
+#: templates/auth/verify_email.html:12
+msgid ""
+"Thank you for registering with us. Please confirm your email address by "
+"clicking the link below."
+msgstr ""
+"Biz bilan ro'yxatdan o'tganingiz uchun tashakkur. Quyidagi havolani bosish "
+"orqali elektron pochta manzilingizni tasdiqlang."
+
+#: templates/comments/comment.html:35
+#, fuzzy
+#| msgid "Offers"
+msgid "All Offers"
+msgstr "Takliflar"
+
+#: templates/comments/comment.html:74
+msgid "Who wrote a comment"
+msgstr "Kim koment yozdi"
+
+#: templates/comments/comment.html:103 templates/comments/comment.html:148
+msgid "Message sent today at"
+msgstr "Xabar bugun yuborilgan"
+
+#: templates/comments/comment.html:105 templates/comments/comment.html:150
+msgid "Message sent yesterday at"
+msgstr "Xabar kecha yuborilgan"
+
+#: templates/comments/comment.html:107 templates/comments/comment.html:152
+#, fuzzy
+#| msgid "Messages"
+msgid "Message sent on"
+msgstr "Xabarlar"
+
+#: templates/comments/comment.html:229
+msgid "Follow on LinkedIn"
+msgstr "LinkedIn-da kuzatib boring"
+
+#: templates/comments/comment.html:249
+#, fuzzy
+#| msgid "Description"
+msgid "Offer description"
+msgstr "Tavsif"
+
+#: templates/forms/offer-form.html:11
+#, fuzzy
+#| msgid "Offer"
+msgid "Offer Form"
+msgstr "Taklif"
+
+#: templates/forms/offer-form.html:53 templates/index.html:56
+#: templates/index.html:400 templates/offers/offer.html:46
+#: templates/profile/profile.html:48
 msgid "Home"
 msgstr "Asosiy"
 
-#: templates/index.html:105
+#: templates/forms/offer-form.html:57 templates/forms/offer-form.html:96
+#, fuzzy
+#| msgid "Problem"
+msgid "Submit a problem"
+msgstr "Muammo"
+
+#: templates/forms/offer-form.html:60 templates/forms/offer-form.html:99
+msgid "Enter problem title"
+msgstr "Muammo sarlavhasini kiriting"
+
+#: templates/forms/offer-form.html:65 templates/forms/offer-form.html:104
+msgid "Enter problem description"
+msgstr "Muammo tavsifini kiriting"
+
+#: templates/forms/offer-form.html:70
+msgid "Send Anonymous"
+msgstr "Anonim yuboring"
+
+#: templates/forms/offer-form.html:73 templates/forms/offer-form.html:88
+#: templates/forms/offer-form.html:106 templates/forms/offer-form.html:121
+msgid "Submit"
+msgstr "Yuborish"
+
+#: templates/forms/offer-form.html:78 templates/forms/offer-form.html:111
+msgid "Submit a offer"
+msgstr "Taklif yuboring"
+
+#: templates/forms/offer-form.html:81 templates/forms/offer-form.html:114
+msgid "Enter offer title"
+msgstr "Taklif sarlavhasini kiriting"
+
+#: templates/forms/offer-form.html:86 templates/forms/offer-form.html:119
+#, fuzzy
+#| msgid "About Description"
+msgid "Enter offer description"
+msgstr "Taklif tavsifini kiriting"
+
+#: templates/forms/offer-form.html:90 templates/forms/offer-form.html:123
+msgid "Log in to write Offer"
+msgstr "Taklif yozish uchun tizimga kiring"
+
+#: templates/index.html:68
+#, fuzzy
+#| msgid "Best offers & problems"
+msgid "Offers&Problems"
+msgstr "Eng yaxshi takliflar va muammolar"
+
+#: templates/index.html:95 templates/offers/offer.html:79
+#: templates/profile/profile.html:75
+msgid "Log out"
+msgstr "Tizimdan Chiqish"
+
+#: templates/index.html:115
 msgid "Exchange of ideas"
 msgstr "Fikr almashish"
 
-#: templates/index.html:107
+#: templates/index.html:117
 msgid "Online platform for requests and offers"
 msgstr "So'rovlar va takliflar uchun onlayn platforma"
 
-#: templates/index.html:111
+#: templates/index.html:121
 msgid "Make an offer"
 msgstr "Taklif qiling"
 
-#: templates/index.html:139
+#: templates/index.html:149
 msgid "Brief information about the site"
 msgstr "Sayt haqida qisqacha ma'lumot"
 
-#: templates/index.html:164
+#: templates/index.html:168
 msgid "Questions - Answers"
 msgstr "Savollar - Javoblar"
 
-#: templates/index.html:166
+#: templates/index.html:170
 msgid "Frequently asked questions"
 msgstr "Tez-tez beriladigan savollar"
 
-#: templates/index.html:248
+#: templates/index.html:201
+msgid "Team"
+msgstr "Jamoa"
+
+#: templates/index.html:203
 msgid "About the participants in the team"
 msgstr "Jamoadagi ishtirokchilar haqida"
 
-#: templates/index.html:447
+#: templates/index.html:250
 msgid "Appeals"
 msgstr "Murojaatlar"
 
-#: templates/index.html:449
+#: templates/index.html:252
 msgid "Best offers & problems"
 msgstr "Eng yaxshi takliflar va muammolar"
 
-#: templates/index.html:708
+#: templates/index.html:393 templates/offers/offer.html:319
 msgid "Copyright © 2024, All Right Reserved Najot Ta'lim Feedback"
-msgstr "Copyright © 2024, Barcha huquqlar himoyalangan Najot Ta'lim Fikr-mulohaza sayti"
+msgstr ""
+"Copyright © 2024, Barcha huquqlar himoyalangan Najot Ta'lim Fikr-mulohaza "
+"sayti"
 
-#: templates/index.html:718
-msgid "Terms"
-msgstr "Shartlar"
-
-#: templates/index.html:721
-msgid "Privacy Policy"
-msgstr "Maxfiylik siyosati"
-
-#: templates/index.html:724
-msgid "Contact"
-msgstr "Aloqa"
-
+#: templates/offers/offer.html:51 templates/profile/profile.html:10
 #: users/models.py:8 users/models.py:18
 msgid "Profile"
 msgstr "Profil"
 
+#: templates/offers/offer.html:56
+msgid "Select language"
+msgstr "Tilni tanlang"
+
+#: templates/offers/offer.html:98
+msgid "Select category"
+msgstr "Kategoriyani tanlang"
+
+#: templates/offers/offer.html:99
+#, fuzzy
+#| msgid "Offers"
+msgid "Show Offers"
+msgstr "Takliflar"
+
+#: templates/offers/offer.html:100
+#, fuzzy
+#| msgid "Problems"
+msgid "Show Problems"
+msgstr "Muammolar"
+
+#: templates/offers/offer.html:102
+#, fuzzy
+#| msgid "Offers"
+msgid "Show My Offers"
+msgstr "Takliflar"
+
+#: templates/offers/offer.html:103
+msgid "Show My Written Comments"
+msgstr ""
+
+#: templates/offers/offer.html:109
+msgid "Search"
+msgstr "Qidiruv"
+
+#: templates/offers/offer.html:130 templates/offers/offer.html:220
+#: templates/offers/offer.html:268
+#, fuzzy
+#| msgid "Offer"
+msgid "offer"
+msgstr "Taklif"
+
+#: templates/offers/offer.html:174 templates/offers/offer.html:265
+#: templates/offers/offer.html:268
+#, fuzzy
+#| msgid "Problem"
+msgid "problem"
+msgstr "Muammo"
+
+#: templates/offers/offer.html:220
+msgid "Mine"
+msgstr "Meniki"
+
+#: templates/offers/offer.html:265
+msgid "Anonymous"
+msgstr "Anonim"
+
+#: templates/offers/offer.html:307
+msgid "Previous"
+msgstr "Oldingi"
+
+#: templates/offers/offer.html:308
+msgid "Next"
+msgstr "Keyingisi"
+
+#: templates/profile/profile.html:97
+#, fuzzy
+#| msgid "Profile"
+msgid "Profile Picture"
+msgstr "Profil"
+
+#: templates/profile/profile.html:114
+msgid "Account Details"
+msgstr "Hisob tafsilotlari"
+
+#: templates/profile/profile.html:118
+msgid "Username (how your name will appear to other users on the site)"
+msgstr ""
+"Foydalanuvchi nomi (sizning ismingiz saytdagi boshqa foydalanuvchilarga "
+"qanday ko'rinishi)"
+
+#: templates/profile/profile.html:119
+msgid "Enter your username"
+msgstr "Foydalanuvchi nomingizni kiriting"
+
+#: templates/profile/profile.html:129
+msgid "Enter your first name"
+msgstr "Ismingizni kiriting"
+
+#: templates/profile/profile.html:136
+#, fuzzy
+#| msgid "Enter a valid domain name."
+msgid "Enter your last name"
+msgstr "Familiyangizni kiriting"
+
+#: templates/profile/profile.html:144
+#, fuzzy
+#| msgid "Organization Name"
+msgid "Organization name"
+msgstr "Tashkilot Nomi"
+
+#: templates/profile/profile.html:146
+#, fuzzy
+#| msgid "Organization Name"
+msgid "Enter your organization name"
+msgstr "Tashkilotingiz nomini kiriting"
+
+#: templates/profile/profile.html:151 users/models.py:10
+msgid "Location"
+msgstr "Manzil"
+
+#: templates/profile/profile.html:153
+msgid "Enter your location"
+msgstr "Joylashuvingizni kiriting"
+
+#: templates/profile/profile.html:159
+#: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1915
+msgid "Email address"
+msgstr "E-pochta manzili"
+
+#: templates/profile/profile.html:161
+#, fuzzy
+#| msgid "Enter a valid email address."
+msgid "Enter your email address"
+msgstr "Yaroqli elektron pochta manzilini kiriting."
+
+#: templates/profile/profile.html:166
+msgid "Linkedin profile link"
+msgstr "Linkedin profili havolasi"
+
+#: templates/profile/profile.html:168
+msgid "Enter your Linkedin profile link"
+msgstr "Linkedin profilingiz havolasini kiriting"
+
+#: templates/profile/profile.html:174
+msgid "Save changes"
+msgstr "O'zgarishlarni saqlash"
+
 #: users/models.py:9
 msgid "Organization Name"
 msgstr "Tashkilot Nomi"
-
-#: users/models.py:10
-msgid "Location"
-msgstr "Manzil"
 
 #: users/models.py:11
 msgid "Linkedin"
@@ -186,11 +537,11 @@ msgstr "Familiya"
 msgid "Profession"
 msgstr "Kasb"
 
-#: users/models.py:32
+#: users/models.py:33
 msgid "Team Member"
 msgstr "Jamoa a'zosi"
 
-#: users/models.py:33
+#: users/models.py:34
 msgid "Team Members"
 msgstr "Jamoa a'zolari"
 
@@ -503,10 +854,6 @@ msgstr ""
 
 #: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1863
 msgid "Duration"
-msgstr ""
-
-#: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1915
-msgid "Email address"
 msgstr ""
 
 #: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1940
@@ -1371,12 +1718,12 @@ msgstr ""
 #: venv/lib/python3.10/site-packages/django/views/templates/directory_index.html:11
 #, python-format
 msgid "Index of %(directory)s"
-msgstr ""
+msgstr "indeksi %(directory)s"
 
 #: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:7
 #: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:204
 msgid "The install worked successfully! Congratulations!"
-msgstr ""
+msgstr "O'rnatish muvaffaqiyatli ishladi! Tabriklaymiz!"
 
 #: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:206
 #, python-format
@@ -1421,3 +1768,18 @@ msgstr "Ulanish, yordam olish yoki hissa qo‘shish"
 #: venv/lib/python3.10/site-packages/modeltranslation/widgets.py:32
 msgid "None"
 msgstr "Yo'q"
+
+#, fuzzy
+#~ msgid "Copyright © 2024, All Right Reserved Najot Ta'lim"
+#~ msgstr ""
+#~ "Copyright © 2024, Barcha huquqlar himoyalangan Najot Ta'lim Fikr-mulohaza "
+#~ "sayti"
+
+#~ msgid "Terms"
+#~ msgstr "Shartlar"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Maxfiylik siyosati"
+
+#~ msgid "Contact"
+#~ msgstr "Aloqa"

@@ -5,6 +5,38 @@
 url("../../fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
 }
 
+
+.actions {
+    display: flex;
+    justify-content: flex-start; /* Aligns elements to the left */
+    align-items: center; /* Vertically centers elements */
+}
+
+.action-icons {
+    display: flex;
+    gap: 15px; /* Adds space between the icons */
+    align-items: center;
+}
+
+.action-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.bi {
+    font-size: 1.2em;
+}
+
+
+
 .bi::before,
 [class^="bi-"]::before,
 [class*=" bi-"]::before {

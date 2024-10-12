@@ -1,5 +1,5 @@
 .slider {
-    --totSlides: 4;
+    --totSlides: 2;
     --slideWidth: 800px;
     --slideHeight: 100%;
     --animationSpeed: calc(5s * var(--totSlides));
