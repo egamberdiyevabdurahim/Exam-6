@@ -23,7 +23,7 @@ class TeamModel(UsefulModel):
     first_name = models.CharField(verbose_name=_("First Name"), max_length=64)
     last_name = models.CharField(verbose_name=_("Last Name"), max_length=64)
     profession = models.CharField(verbose_name=_("Profession"), max_length=128)
-    avatar = models.ImageField(verbose_name=_("Avatar"), upload_to="team/", default='default.jpg')
+    avatar = models.ImageField(verbose_name=_("Avatar"), upload_to="team/", default='assets/my/default.jpg')
     description = models.TextField(verbose_name=_("Description"), null=True)
 
     def __str__(self):
