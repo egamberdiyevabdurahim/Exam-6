@@ -67,20 +67,20 @@
                     </select>
                 </li>
             </ul>
-            <div class="d-none d-lg-block">
-                    {% if request.user.is_authenticated %}
-                    <a href="{% url 'users:logout' url=encoded_url %}"
-                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                        <i class="btn-icon bi-person"></i>
-                        <span>{% trans 'Log out' %}</span>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'users:login' url=encoded_url %}"
-                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                        <i class="btn-icon bi-person"></i>
-                        <span>{% trans 'Log in' %}</span>
-                    </a>
-                    {% endif %}
+            <div class="nav-item">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'users:logout' url=encoded_url %}"
+                   class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                    <i class="btn-icon bi-person"></i>
+                    <span>{% trans 'Log out' %}</span>
+                </a>
+                {% else %}
+                <a href="{% url 'users:login' url=encoded_url %}"
+                   class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+                    <i class="btn-icon bi-person"></i>
+                    <span>{% trans 'Log in' %}</span>
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>
