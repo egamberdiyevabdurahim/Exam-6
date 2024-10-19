@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+from django.conf.global_settings import AUTH_USER_MODEL
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -124,6 +125,8 @@ EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+AUTH_USER_MODEL = 'users.UserModel'
 
 
 try:

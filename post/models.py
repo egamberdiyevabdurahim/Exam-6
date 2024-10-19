@@ -1,13 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+
 from common.models import UsefulModel
+from users.models import UserModel
 
 
 class ProblemModel(UsefulModel):
     title = models.CharField(verbose_name=_('Title'), max_length=128)
     description = models.TextField(verbose_name=_('Description'))
-    user = models.ForeignKey(User, related_name='problems', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(UserModel, related_name='problems', on_delete=models.SET_NULL, null=True, blank=True)
     is_pinned = models.BooleanField(verbose_name=_('Is pinned'), default=False)
     total_views = models.PositiveIntegerField(default=0)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
@@ -31,7 +32,7 @@ class ProblemModel(UsefulModel):
 class OfferModel(UsefulModel):
     title = models.CharField(verbose_name=_('Title'), max_length=128)
     description = models.TextField(verbose_name=_('Description'))
-    user = models.ForeignKey(User, related_name='offers', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(UserModel, related_name='offers', on_delete=models.SET_NULL, null=True)
     is_pinned = models.BooleanField(verbose_name=_('Is pinned'), default=False)
     total_views = models.PositiveIntegerField(default=0)
 
@@ -53,7 +54,7 @@ class OfferModel(UsefulModel):
 
 class CommentProblemModel(UsefulModel):
     comment = models.TextField(verbose_name=_("Comment"))
-    user = models.ForeignKey(User, related_name='problem_comments', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(UserModel, related_name='problem_comments', on_delete=models.SET_NULL, null=True)
     problem = models.ForeignKey(ProblemModel, related_name='comments', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -70,7 +71,7 @@ class CommentProblemModel(UsefulModel):
 
 class CommentOfferModel(UsefulModel):
     comment = models.TextField(verbose_name=_("Comment"))
-    user = models.ForeignKey(User, related_name='offer_comments', on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(UserModel, related_name='offer_comments', on_delete=models.SET_NULL, null=True)
     offer = models.ForeignKey(OfferModel, related_name='comments', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -86,7 +87,7 @@ class CommentOfferModel(UsefulModel):
 
 
 class LikeOfferModel(models.Model):
-    user = models.ManyToManyField(User, related_name='like_offers')
+    user = models.ManyToManyField(UserModel, related_name='like_offers')
     offer = models.OneToOneField(OfferModel, related_name='likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -99,7 +100,7 @@ class LikeOfferModel(models.Model):
 
 
 class LikeProblemModel(models.Model):
-    user = models.ManyToManyField(User, related_name='like_problems')
+    user = models.ManyToManyField(UserModel, related_name='like_problems')
     problem = models.OneToOneField(ProblemModel, related_name='likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -112,7 +113,7 @@ class LikeProblemModel(models.Model):
 
 
 class LikeCommentOfferModel(models.Model):
-    user = models.ManyToManyField(User, related_name='like_comment_offer')
+    user = models.ManyToManyField(UserModel, related_name='like_comment_offer')
     offer_comment = models.OneToOneField(CommentOfferModel, related_name='likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -125,7 +126,7 @@ class LikeCommentOfferModel(models.Model):
 
 
 class LikeCommentProblemModel(models.Model):
-    user = models.ManyToManyField(User, related_name='like_comment_problem')
+    user = models.ManyToManyField(UserModel, related_name='like_comment_problem')
     problem_comment = models.OneToOneField(CommentProblemModel, related_name='likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 

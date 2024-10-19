@@ -1,17 +1,14 @@
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
 
 from conf.settings import EMAIL_HOST_USER
 from users.form import RegisterForm, LoginForm, EditProfileForm
-from users.models import ProfileModel
+from users.models import ProfileModel, UserModel
 from users.token import email_token_generator
 from utils.hasher import decode_url
 
@@ -19,7 +16,7 @@ from utils.hasher import decode_url
 def verify_email(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
+        user = UserModel.objects.get(pk=uid)
         if email_token_generator.check_token(user, token):
             user.is_active = True
             user.save()
@@ -60,44 +57,17 @@ def login_view(request, url=None):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username_or_email = form.cleaned_data['username_or_email']
+            email = form.cleaned_data['username_or_email']
             password = form.cleaned_data['password']
 
-            try:
-                validate_email(username_or_email)
-                is_email = True
-            except ValidationError:
-                is_email = False
-
-            if is_email:
-                user_data = User.objects.filter(email=username_or_email.lower()).first()
-                if user_data and user_data.is_active:
-                    username = user_data.username
-                else:
-                    username = None
-            else:
-                user_data = User.objects.filter(username=username_or_email.lower()).first()
-                if user_data and user_data.is_active:
-                    username = username_or_email
-                else:
-                    username = None
-
-            if username:
-                user = authenticate(request=request, username=username, password=password)
-                if user:
-                    login(request, user)
-                    return redirect(redirect_url)
-                else:
-                    return render(request, 'auth/login.html', {
-                        'form': form,
-                        'error': 'Invalid login details or account not activated. Please check your email.',
-                        'redirect_url': url,
-                        'form_data': request.POST,
-                    })
+            user = authenticate(request=request, email=email, password=password)
+            if user:
+                login(request, user)
+                return redirect(redirect_url)
             else:
                 return render(request, 'auth/login.html', {
                     'form': form,
-                    'error': 'Username or Password error',
+                    'error': 'Invalid login details or account not activated. Please check your email.',
                     'redirect_url': url,
                     'form_data': request.POST,
                 })
@@ -148,7 +118,7 @@ def logout_view(request, url):
 
 
 def profile_view(request, pk):
-    user = User.objects.filter(pk=pk).first()
+    user = UserModel.objects.filter(pk=pk).first()
     context = {
         'user': user,
     }
@@ -156,7 +126,7 @@ def profile_view(request, pk):
 
 
 def profile_edit_view(request, pk):
-    user = User.objects.filter(pk=pk).first()
+    user = UserModel.objects.filter(pk=pk).first()
     if request.method == 'POST':
         form = EditProfileForm(request.POST, request.FILES)
         if form.is_valid():

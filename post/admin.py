@@ -19,12 +19,12 @@ class UsefulAdmin(TranslationAdmin):
 
 @admin.register(ProblemModel)
 class ProblemModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'user__username', 'created_at', 'is_pinned')
+    list_display = ('id', 'title',  'created_at', 'is_pinned')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
                      'title',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
@@ -33,12 +33,12 @@ class ProblemModelAdmin(admin.ModelAdmin):
 
 @admin.register(OfferModel)
 class OfferModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'user__username', 'created_at', 'is_pinned')
+    list_display = ('id', 'title',  'created_at', 'is_pinned')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
                      'title',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
@@ -47,13 +47,13 @@ class OfferModelAdmin(admin.ModelAdmin):
 
 @admin.register(CommentOfferModel)
 class CommentOfferModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'offer__title', 'user__username', 'created_at')
+    list_display = ('id', 'offer__title',  'created_at')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
                      'offer__title',
                      'offer__description',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
@@ -62,13 +62,13 @@ class CommentOfferModelAdmin(admin.ModelAdmin):
 
 @admin.register(CommentProblemModel)
 class CommentProblemModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'problem__title', 'user__username', 'created_at')
+    list_display = ('id', 'problem__title',  'created_at')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
                      'problem__title',
                      'problem__description',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
@@ -77,12 +77,12 @@ class CommentProblemModelAdmin(admin.ModelAdmin):
 
 @admin.register(LikeOfferModel)
 class LikeOfferModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'offer__title', 'user__username', 'created_at')
+    list_display = ('id', 'offer__title',  'created_at')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
                      'offer__title',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
@@ -91,12 +91,12 @@ class LikeOfferModelAdmin(admin.ModelAdmin):
 
 @admin.register(LikeProblemModel)
 class LikeProblemModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'problem__title', 'user__username', 'created_at')
+    list_display = ('id', 'problem__title',  'created_at')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
                      'problem__title',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
@@ -105,11 +105,11 @@ class LikeProblemModelAdmin(admin.ModelAdmin):
 
 @admin.register(LikeCommentOfferModel)
 class LikeCommentOfferModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user__username', 'created_at')
+    list_display = ('id',  'created_at')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
@@ -118,11 +118,11 @@ class LikeCommentOfferModelAdmin(admin.ModelAdmin):
 
 @admin.register(LikeCommentProblemModel)
 class LikeCommentProblemModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user__username', 'created_at')
+    list_display = ('id',  'created_at')
     list_display_links = list_display
     ordering = ('-created_at',)
     search_fields = ('id',
-                     'user__username',
+                     
                      'user__email',
                      'user__first_name',
                      'user__last_name')
