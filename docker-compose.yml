@@ -8,8 +8,15 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=01012008
+      - POSTGRES_DB=exam_6
     depends_on:
       - db
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
 
   db:
     image: postgres:15

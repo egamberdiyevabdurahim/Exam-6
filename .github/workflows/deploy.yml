@@ -27,38 +27,49 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKERHUB_USER }}/exam-6:latest  # Use a relevant Docker image name
+        tags: ${{ secrets.DOCKERHUB_USER }}/exam-6:latest  # Docker image name aligned with project
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-    - name: Deploy to DigitalOcean
+    - name: Deploy to Server
       uses: appleboy/ssh-action@v0.1.11
       with:
-        host: 138.197.184.77  # Replace with your server IP
+        host: 138.197.184.77  # Replace with your server's IP address
         username: root  # Replace with your server username
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
           # Ensure the Docker network exists
-          docker network inspect exam_network >/dev/null 2>&1 || docker network create exam_network
+          docker network inspect exam6_network >/dev/null 2>&1 || docker network create exam6_network
 
           # Pull the latest Docker image
           docker pull ${{ secrets.DOCKERHUB_USER }}/exam-6:latest
 
-          # Stop and remove the old container if it exists
-          docker ps -q --filter "name=exam_6" | grep -q . && docker stop exam_6 && docker rm exam_6
+          # Stop and remove old containers if they exist
+          docker ps -q --filter "name=exam6_web" | grep -q . && docker stop exam6_web && docker rm exam6_web
+          docker ps -q --filter "name=exam6_db" | grep -q . && docker stop exam6_db && docker rm exam6_db
 
-          # Run the new container
-          docker run -d --name exam_6 \
-            --env-file /root/exam_6/.env \  # Update to your actual .env file location if different
-            --network=exam_network \
+          # Run the new database container
+          docker run -d --name exam6_db \
+            --network=exam6_network \
+            -e POSTGRES_USER=postgres \
+            -e POSTGRES_PASSWORD=01012008 \
+            -e POSTGRES_DB=exam_6 \
+            -v exam6_postgres_data:/var/lib/postgresql/data \
+            postgres:15
+
+          # Run the new web container
+          docker run -d --name exam6_web \
+            --env-file /root/exam6/.env \
+            --network=exam6_network \
+            -p 8000:8000 \
             --restart=always \
             ${{ secrets.DOCKERHUB_USER }}/exam-6:latest \
-            sh -c "alembic upgrade head && pybabel compile -d locale -D lang && python main.py"
+            sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
 
           # Optional: Display logs for debugging
           sleep 5
-          docker logs exam_6
+          docker logs exam6_web
